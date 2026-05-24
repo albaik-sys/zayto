@@ -51,11 +51,11 @@
                 <textarea name="appeal_content" placeholder="اكتب الشرح المكتمل والتفاصيل الهامة هنا..." required class="gov-form-input" rows="4"></textarea>
             </div>
             <div class="form-group-box">
-                <label>تاريخ انتهاء النشر والاهتمام تلقائياً:</label>
+                <label>تاريخ انتهاء النشر والاهتمام تلقائياً (إن وجد):</label>
                 <input type="date" name="appeal_end" class="gov-form-input">
             </div>
             <div class="form-group-box">
-                <label>إرفاق صورة داعمة واضحة (مفقود / تقارير حالة):</label>
+                <label>إرفاق صورة داعمة واضحة للموضوع:</label>
                 <label class="custom-gov-file-uploader">
                     <i class="fas fa-upload"></i> اضغط هنا لتحميل الصورة من جهازك
                     <input type="file" name="appeal_image" accept="image/*" style="display:none;">
@@ -78,7 +78,6 @@
 </div>
 
 <script>
-    // جافاسكربت القائمة الجانبية المحدث والمنظم للموبايل
     const mobileToggle = document.getElementById('mobileToggle');
     const navUl = document.getElementById('navUl');
     const mobileCloseMenu = document.getElementById('mobileCloseMenu');
@@ -93,18 +92,24 @@
         const lblTitle = document.getElementById('lblFormTitle');
         const lblContent = document.getElementById('lblFormContent');
         hiddenType.value = type;
+        
         const num1 = Math.floor(Math.random() * 9) + 1; const num2 = Math.floor(Math.random() * 9) + 1;
         document.getElementById('captchaMathOp').innerText = `${num1} + ${num2} =`;
         document.getElementById('captchaCorrectValue').value = num1 + num2;
+        
         if (type === 'lost') {
             dTitle.innerHTML = '<i class="fas fa-search"></i> نظام الإبلاغ المركزي عن المفقودات وحمايتها';
             lblPhone.innerText = 'رقم جوال للتواصل / مكان الفقد والاتصال *'; lblTitle.innerText = 'ما الشيء المفقود؟ (عنوان البلاغ) *'; lblContent.innerText = 'تفاصيل أخرى، أوصاف المفقود ومكان العثور المتوقع *';
+        } else if (type === 'person') {
+            dTitle.innerHTML = '<i class="fas fa-award" style="color:#d4af37;"></i> بوابة ترشيح شخصية الأسبوع';
+            lblPhone.innerText = 'رقم جوالك (للتواصل في حال تم اعتماد الترشيح) *'; lblTitle.innerText = 'الاسم الرباعي للشخصية المرشحة *'; lblContent.innerText = 'اكتب نبذة وافية عن الشخصية، إنجازاتها، ومساهماتها في حي الزيتون ولماذا تستحق التكريم *';
         } else {
             dTitle.innerHTML = '<i class="fas fa-file-signature"></i> بوابة الديوان الإلكتروني لتقديم طلبات المناشدات الدعم';
             lblPhone.innerText = 'رقم الجوال / العنوان السكني الحالي للحالة *'; lblTitle.innerText = 'موضوع وعنوان المناشدة الرئيسي والعاجل *'; lblContent.innerText = 'تفاصيل أخرى وشرح كامل ومستوفى للظروف والاستغاثة *';
         }
         modal.style.display = 'flex';
     }
+    
     function closeGovModal() { document.getElementById('govUnifiedModal').style.display = 'none'; }
     window.onclick = function(e) { if(e.target == document.getElementById('govUnifiedModal')) closeGovModal(); }
 
@@ -133,7 +138,6 @@
         document.querySelector('#royalPollForm button').style.display = 'none'; document.getElementById('pollAckMsg').style.display = 'block';
     }
 
-    // 🟢 جافاسكربت محاكي آلة الكتابة لشريط الأخبار العاجلة (Typing Effect) 🟢
     const tickerText = "<?php echo esc_js(get_theme_mod('alzaytoon_ticker_text', 'باقي 5 أيام على الإطلاق الرسمي للمنصة الإلكترونية الموحدة لحي الزيتون... شاركنا الآن برأيك وبلاغاتك.')); ?>";
     const typingElement = document.getElementById('typingTickerElement');
     let index = 0;
@@ -141,9 +145,9 @@
         if (index < tickerText.length) {
             typingElement.innerHTML += tickerText.charAt(index);
             index++;
-            setTimeout(typeEffect, 45); // سرعة ضربة الحرف بالملي ثانية
+            setTimeout(typeEffect, 45);
         } else {
-            setTimeout(() => { typingElement.innerHTML = ""; index = 0; typeEffect(); }, 5000); // إيقاف 5 ثواني ثم إعادة الكتابة من جديد
+            setTimeout(() => { typingElement.innerHTML = ""; index = 0; typeEffect(); }, 5000);
         }
     }
     if(typingElement) { document.addEventListener('DOMContentLoaded', typeEffect); }
