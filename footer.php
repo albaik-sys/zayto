@@ -51,7 +51,7 @@
                 <textarea name="appeal_content" placeholder="اكتب الشرح المكتمل والتفاصيل الهامة هنا..." required class="gov-form-input" rows="4"></textarea>
             </div>
             <div class="form-group-box">
-                <label>تاريخ انتهاء النشر والاهتمام تلقائياً (إن وجد):</label>
+                <label>تاريخ انتهاء النشر / موعد الفعالية (إن وجد):</label>
                 <input type="date" name="appeal_end" class="gov-form-input">
             </div>
             <div class="form-group-box">
@@ -103,6 +103,9 @@
         } else if (type === 'person') {
             dTitle.innerHTML = '<i class="fas fa-award" style="color:#d4af37;"></i> بوابة ترشيح شخصية الأسبوع';
             lblPhone.innerText = 'رقم جوالك (للتواصل في حال تم اعتماد الترشيح) *'; lblTitle.innerText = 'الاسم الرباعي للشخصية المرشحة *'; lblContent.innerText = 'اكتب نبذة وافية عن الشخصية، إنجازاتها، ومساهماتها في حي الزيتون ولماذا تستحق التكريم *';
+        } else if (type === 'events') {
+            dTitle.innerHTML = '<i class="far fa-calendar-check" style="color:#2ecc71;"></i> بوابة تسجيل الفعاليات والمبادرات المجتمعية';
+            lblPhone.innerText = 'رقم جوال الجهة المنظمة / المنسق *'; lblTitle.innerText = 'اسم الفعالية أو المبادرة *'; lblContent.innerText = 'تفاصيل الفعالية، أهدافها، الموقع، وتواريخ البدء والانتهاء بالتحديد *';
         } else {
             dTitle.innerHTML = '<i class="fas fa-file-signature"></i> بوابة الديوان الإلكتروني لتقديم طلبات المناشدات الدعم';
             lblPhone.innerText = 'رقم الجوال / العنوان السكني الحالي للحالة *'; lblTitle.innerText = 'موضوع وعنوان المناشدة الرئيسي والعاجل *'; lblContent.innerText = 'تفاصيل أخرى وشرح كامل ومستوفى للظروف والاستغاثة *';
