@@ -101,7 +101,7 @@
             <div class="royal-content-panel royal-box">
                 <div class="panel-header-gov"><i class="fas fa-poll-h" style="color:var(--gold); margin-left:8px;"></i> مركز استطلاعات الرأي</div>
                 <div class="panel-inner-body poll-wrapper-box" style="padding:20px;">
-                    <h3 class="poll-question-title" style="font-size:14.5px; margin-bottom:15px; font-weight:700; line-height:1.5; text-align:center;"><?php echo get_theme_mod('poll_q', 'ما رأيك في مستوى الخدمات والبنية التحتية في حي الزيتون مؤخراً؟'); ?></h3>
+                    <h3 class="poll-question-title" style="font-size:14.5px; margin-bottom:15px; font-weight:700; line-height:1.5; text-align:center;"><?php echo get_theme_mod('alzaytoon_poll_question', 'ما رأيك في مستوى الخدمات والبنية التحتية في حي الزيتون مؤخراً؟'); ?></h3>
                     <form id="royalPollForm">
                         <label class="poll-label-radio" style="display:block; margin-bottom:12px; position:relative; padding-right:20px; cursor:pointer;">
                             <input type="radio" name="poll_vote_radio" value="1" style="position:absolute; right:0; top:4px;">

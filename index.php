@@ -204,7 +204,6 @@
 
 </div>
 
-<?php get_footer(); ?>
     <section class="home-dual-news-tables">
         <div class="news-table-block">
             <div class="news-table-header">
@@ -253,3 +252,4 @@
         <p class="adv-banner-desc">لرعاية وتطوير الأنشطة الخيرية والخدمية داخل الحي، يرجى التواصل مع إدارة الشبكة عبر بوابة اتصل بنا الرسمية أو عبر رقم الواتساب المعتمد.</p>
     </section>
 
+<?php get_footer(); ?>
