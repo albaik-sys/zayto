@@ -34,7 +34,7 @@
         <form id="govUnifiedForm" class="gov-form-wrapper" enctype="multipart/form-data">
             <div class="gov-form-row-grid">
                 <div class="form-group-box">
-                    <label>الاسم الكامل أو اسم العضوية:</label>
+                    <label id="lblNameField">الاسم الكامل أو اسم العضوية:</label>
                     <input type="text" name="appeal_name" placeholder="أدخل الاسم رباعي" class="gov-form-input">
                 </div>
                 <div class="form-group-box">
@@ -51,7 +51,7 @@
                 <textarea name="appeal_content" placeholder="اكتب الشرح المكتمل والتفاصيل الهامة هنا..." required class="gov-form-input" rows="4"></textarea>
             </div>
             <div class="form-group-box">
-                <label>تاريخ انتهاء النشر / موعد الفعالية (إن وجد):</label>
+                <label id="lblEndDate">تاريخ انتهاء النشر / موعد الفعالية (إن وجد):</label>
                 <input type="date" name="appeal_end" class="gov-form-input">
             </div>
             <div class="form-group-box">
@@ -88,15 +88,22 @@
         const modal = document.getElementById('govUnifiedModal');
         const hiddenType = document.getElementById('hiddenFormType');
         const dTitle = document.getElementById('modalDynamicTitle');
+        const lblName = document.getElementById('lblNameField');
         const lblPhone = document.getElementById('lblPhoneAddress');
         const lblTitle = document.getElementById('lblFormTitle');
         const lblContent = document.getElementById('lblFormContent');
+        const lblDate = document.getElementById('lblEndDate');
+        
         hiddenType.value = type;
         
         const num1 = Math.floor(Math.random() * 9) + 1; const num2 = Math.floor(Math.random() * 9) + 1;
         document.getElementById('captchaMathOp').innerText = `${num1} + ${num2} =`;
         document.getElementById('captchaCorrectValue').value = num1 + num2;
         
+        // إعادة تعيين التسميات الافتراضية
+        lblName.innerText = 'الاسم الكامل أو اسم العضوية:';
+        lblDate.innerText = 'تاريخ انتهاء النشر / موعد الفعالية (إن وجد):';
+
         if (type === 'lost') {
             dTitle.innerHTML = '<i class="fas fa-search"></i> نظام الإبلاغ المركزي عن المفقودات وحمايتها';
             lblPhone.innerText = 'رقم جوال للتواصل / مكان الفقد والاتصال *'; lblTitle.innerText = 'ما الشيء المفقود؟ (عنوان البلاغ) *'; lblContent.innerText = 'تفاصيل أخرى، أوصاف المفقود ومكان العثور المتوقع *';
@@ -105,9 +112,12 @@
             lblPhone.innerText = 'رقم جوالك (للتواصل في حال تم اعتماد الترشيح) *'; lblTitle.innerText = 'الاسم الرباعي للشخصية المرشحة *'; lblContent.innerText = 'اكتب نبذة وافية عن الشخصية، إنجازاتها، ومساهماتها في حي الزيتون ولماذا تستحق التكريم *';
         } else if (type === 'events') {
             dTitle.innerHTML = '<i class="far fa-calendar-check" style="color:#2ecc71;"></i> بوابة تسجيل الفعاليات والمبادرات المجتمعية';
-            lblPhone.innerText = 'رقم جوال الجهة المنظمة / المنسق *'; lblTitle.innerText = 'اسم الفعالية أو المبادرة *'; lblContent.innerText = 'تفاصيل الفعالية، أهدافها، الموقع، وتواريخ البدء والانتهاء بالتحديد *';
+            lblName.innerText = 'الجهة المنظمة / اسم المبادرة:'; lblPhone.innerText = 'رقم جوال منسق الفعالية للتواصل *'; lblTitle.innerText = 'اسم الفعالية أو المبادرة *'; lblContent.innerText = 'تفاصيل الفعالية، أهدافها، والموقع المخصص لها *'; lblDate.innerText = 'تاريخ ووقت بدء الفعالية *';
+        } else if (type === 'news') {
+            dTitle.innerHTML = '<i class="far fa-newspaper" style="color:#2980b9;"></i> بوابة استقبال الأخبار والتغطيات المحلية';
+            lblName.innerText = 'اسم المراسل / المواطن صاحب الخبر:'; lblPhone.innerText = 'رقم الجوال للتواصل (لن يتم نشره) *'; lblTitle.innerText = 'عنوان الخبر أو التغطية *'; lblContent.innerText = 'اكتب تفاصيل الحدث ومكانه بشكل كامل وواضح *'; lblDate.innerText = 'تاريخ وقوع الحدث:';
         } else {
-            dTitle.innerHTML = '<i class="fas fa-file-signature"></i> بوابة الديوان الإلكتروني لتقديم طلبات المناشدات الدعم';
+            dTitle.innerHTML = '<i class="fas fa-file-signature"></i> بوابة الديوان الإلكتروني لتقديم طلبات المناشدات والدعم';
             lblPhone.innerText = 'رقم الجوال / العنوان السكني الحالي للحالة *'; lblTitle.innerText = 'موضوع وعنوان المناشدة الرئيسي والعاجل *'; lblContent.innerText = 'تفاصيل أخرى وشرح كامل ومستوفى للظروف والاستغاثة *';
         }
         modal.style.display = 'flex';
