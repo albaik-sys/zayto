@@ -52,7 +52,6 @@
         <button class="mobile-menu-btn" id="mobileToggle"><i class="fas fa-bars"></i> قائمة الشبكة الرسمية</button>
         <div class="nav-menu-container">
             <?php
-            // استدعاء القائمة الديناميكية من ووردبريس
             if ( has_nav_menu( 'primary' ) ) {
                 wp_nav_menu( array(
                     'theme_location' => 'primary',
@@ -61,7 +60,6 @@
                     'depth'          => 1,
                 ) );
             } else {
-                // القائمة الاحتياطية في حال لم تقم بإنشاء قائمة من لوحة التحكم بعد
                 ?>
                 <ul class="nav-ul" id="navUl">
                     <li class="close-mobile-li"><a href="javascript:void(0)" id="mobileCloseMenu"><i class="fas fa-times"></i> إغلاق القائمة</a></li>
@@ -70,6 +68,7 @@
                     <li><a href="<?php echo get_post_type_archive_link('events'); ?>"><i class="far fa-calendar-alt"></i> المناسبات والفعاليات</a></li>
                     <li><a href="<?php echo get_post_type_archive_link('help'); ?>"><i class="fas fa-hand-holding-heart"></i> المناشدات والدعم</a></li>
                     <li><a href="<?php echo get_post_type_archive_link('person'); ?>"><i class="fas fa-user-tie"></i> شخصية الأسبوع</a></li>
+                    <li><a href="<?php echo get_post_type_archive_link('lost'); ?>"><i class="fas fa-search-location"></i> المفقودات والأمانات</a></li>
                 </ul>
                 <?php
             }
