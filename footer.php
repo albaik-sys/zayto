@@ -195,7 +195,85 @@ if(govUnifiedForm) {
     });
 }
 </script>
+<!-- ==============================================
+     نافذة الترحيب التجريبية (تظهر مرة واحدة لكل زائر)
+     ============================================== -->
+<div id="welcomeDemoModal" class="welcome-modal-overlay">
+    <div class="welcome-modal-container">
+        <div class="welcome-modal-header">
+            <div class="welcome-icon">
+                <i class="fas fa-flask"></i>
+            </div>
+            <button class="welcome-close-btn" id="closeWelcomeModal">&times;</button>
+        </div>
+        <div class="welcome-modal-body">
+            <h3>مرحباً بك في شبكة حي الزيتون 🌿</h3>
+            <div class="welcome-badge">
+                <i class="fas fa-vial"></i> بيئة تجريبية
+            </div>
+            <p>
+                هذا الموقع في <strong>المرحلة التجريبية</strong>. جميع المناشدات، الأخبار، 
+                الفعاليات، والبيانات المعروضة هي <strong>أمثلة اختبارية</strong> لأغراض التطوير والعرض فقط.
+            </p>
+            <p>
+                نعتذر عن أي تقصير، ونعمل على تحسين المنصة لتقديم أفضل خدمة لأهالي حي الزيتون.
+            </p>
+            <div class="welcome-note">
+                <i class="fas fa-info-circle"></i> لن تظهر هذه الرسالة مرة أخرى لك.
+            </div>
+        </div>
+        <div class="welcome-modal-footer">
+            <button class="welcome-btn" id="confirmWelcomeBtn">فهمت، شكراً لكم</button>
+        </div>
+    </div>
+</div>
 
+<script>
+// نافذة الترحيب التجريبية - تظهر مرة واحدة لكل زائر
+(function() {
+    // التحقق إذا كان الزائر قد شاهد النافذة من قبل
+    const hasSeenWelcome = localStorage.getItem('zaytoon_welcome_seen');
+    
+    if (!hasSeenWelcome) {
+        // إظهار النافذة بعد 0.5 ثانية (تأثير لطيف)
+        setTimeout(function() {
+            const modal = document.getElementById('welcomeDemoModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // منع التمرير خلف النافذة
+            }
+        }, 500);
+    }
+    
+    // دالة إغلاق النافذة
+    function closeWelcomeModal() {
+        const modal = document.getElementById('welcomeDemoModal');
+        if (modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // إعادة التمرير
+            // تخزين أن الزائر شاهد النافذة (لن تظهر مرة أخرى)
+            localStorage.setItem('zaytoon_welcome_seen', 'true');
+        }
+    }
+    
+    // ربط أزرار الإغلاق
+    const closeBtn = document.getElementById('closeWelcomeModal');
+    const confirmBtn = document.getElementById('confirmWelcomeBtn');
+    
+    if (closeBtn) closeBtn.addEventListener('click', closeWelcomeModal);
+    if (confirmBtn) confirmBtn.addEventListener('click', closeWelcomeModal);
+    
+    // إغلاق النافذة عند الضغط على الخلفية (الoverlay)
+    const overlay = document.getElementById('welcomeDemoModal');
+    if (overlay) {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                closeWelcomeModal();
+            }
+        });
+    }
+})();
+</script>
 <?php wp_footer(); ?>
 </body>
 </html>
