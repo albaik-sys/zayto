@@ -1010,7 +1010,59 @@ img { max-width: 100%; height: auto; display: block; }
 .lost-list-row-item-box h3 a:hover {
     color: var(--primary) !important;
 }
-
+/* ==============================================
+   تحسينات إضافية للواجهة الخرافية
+   ============================================== */
+.gov-action-btn-sm {
+    background: #115c38;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.gov-action-btn-sm:hover {
+    background: #d4af37;
+    color: #115c38;
+    transform: translateY(-2px);
+}
+.home-bottom-adv-banner {
+    background: linear-gradient(135deg, #115c38 0%, #0b3d25 100%);
+    border: 2px solid #d4af37;
+    border-radius: 20px;
+    padding: 35px;
+    text-align: center;
+    margin: 50px 0 30px;
+}
+.adv-banner-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #d4af37;
+    margin-bottom: 10px;
+}
+.adv-banner-desc {
+    font-size: 14px;
+    color: #e2e8f0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+@media(max-width: 768px) {
+    .services-5grid { gap: 10px; }
+    .service-card { padding: 15px 8px; }
+    .service-icon { width: 45px; height: 45px; font-size: 20px; }
+    .service-title { font-size: 12px; }
+    .service-desc { display: none; }
+    .slider-content h2 { font-size: 22px; }
+    .slider-content p { display: none; }
+    .slider-btn { padding: 6px 15px; font-size: 12px; }
+    .main-slider-area { height: 350px; }
+}
 @media(max-width: 768px) {
     .lost-list-row-item-box {
         flex-direction: column !important;
