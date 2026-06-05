@@ -1,30 +1,89 @@
-<footer class="main-royal-footer">
+<footer class="luxury-footer">
     <div class="container">
-        <div class="footer-grid-layout">
-            <div class="footer-brand-column">
-                <h3><i class="fas fa-tree"></i> شبكة حي الزيتون</h3>
-                <p>الديوان والمنصة المعتمدة الرسمية لنشر وبث أخبار ومناشدات ومناسبات أهالي حي الزيتون بكل شفافية ومصداقية وعمل مجتمعي مشترك.</p>
+        
+        <!-- الصف الأول: شبكة الروابط الرئيسية (4 أعمدة) -->
+        <div class="footer-grid">
+            
+            <!-- العمود الأول: معلومات الموقع -->
+            <div class="footer-col about-col">
+                <div class="footer-logo">
+                    <i class="fas fa-tree"></i>
+                    <h3>شبكة حي الزيتون</h3>
+                </div>
+                <p class="footer-desc">
+                    المنصة الرقمية الرسمية لأهالي حي الزيتون. ننشر الأخبار، نستقبل المناشدات، ونوثق الفعاليات والمبادرات المجتمعية بشفافية وموثوقية.
+                </p>
+                <div class="footer-social">
+                    <a href="<?php echo esc_url(get_theme_mod('alzaytoon_facebook', '#')); ?>" target="_blank" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/<?php echo esc_attr(get_theme_mod('alzaytoon_whatsapp', '')); ?>" target="_blank" aria-label="واتساب"><i class="fab fa-whatsapp"></i></a>
+                    <a href="<?php echo esc_url(get_theme_mod('alzaytoon_telegram', '#')); ?>" target="_blank" aria-label="تليجرام"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="tel:<?php echo esc_attr(get_theme_mod('alzaytoon_phone', '')); ?>" aria-label="اتصال"><i class="fas fa-phone-alt"></i></a>
+                </div>
             </div>
-            <div class="footer-newsletter-column">
-                <h4>الاشتراك في النشرة والبيانات الرسمية</h4>
-                <form class="footer-subscribe-form-wrap">
-                    <input type="email" placeholder="أدخل البريد الإلكتروني الرسمي" required class="footer-mail-input">
-                    <button type="submit" class="footer-submit-btn">اشترك الآن</button>
-                </form>
+            
+            <!-- العمود الثاني: روابط سريعة (أقسام الموقع) -->
+            <div class="footer-col links-col">
+                <h4><i class="fas fa-link"></i> روابط سريعة</h4>
+                <ul class="footer-links">
+                    <li><a href="<?php echo home_url(); ?>"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="<?php echo get_post_type_archive_link('news'); ?>"><i class="far fa-newspaper"></i> أخبار الحي</a></li>
+                    <li><a href="<?php echo get_post_type_archive_link('events'); ?>"><i class="far fa-calendar-alt"></i> الفعاليات</a></li>
+                    <li><a href="<?php echo get_post_type_archive_link('help'); ?>"><i class="fas fa-hand-holding-heart"></i> المناشدات</a></li>
+                    <li><a href="<?php echo get_post_type_archive_link('person'); ?>"><i class="fas fa-user-tie"></i> شخصية الأسبوع</a></li>
+                    <li><a href="<?php echo get_post_type_archive_link('lost'); ?>"><i class="fas fa-search-location"></i> المفقودات</a></li>
+                </ul>
+            </div>
+            
+            <!-- العمود الثالث: صفحات خدمية مهمة -->
+            <div class="footer-col services-col">
+                <h4><i class="fas fa-cogs"></i> خدمات الديوان</h4>
+                <ul class="footer-links">
+                    <li><a href="javascript:void(0)" onclick="openGovModal('help')"><i class="fas fa-bullhorn"></i> تقديم مناشدة</a></li>
+                    <li><a href="javascript:void(0)" onclick="openGovModal('lost')"><i class="fas fa-search-location"></i> الإبلاغ عن مفقود</a></li>
+                    <li><a href="javascript:void(0)" onclick="openGovModal('news')"><i class="fas fa-camera"></i> إرسال خبر محلي</a></li>
+                    <li><a href="javascript:void(0)" onclick="openGovModal('person')"><i class="fas fa-award"></i> ترشيح شخصية</a></li>
+                    <li><a href="javascript:void(0)" onclick="openGovModal('events')"><i class="fas fa-calendar-plus"></i> تسجيل فعالية</a></li>
+                </ul>
+            </div>
+            
+            <!-- العمود الرابع: معلومات الاتصال + صفحات قانونية -->
+            <div class="footer-col contact-col">
+                <h4><i class="fas fa-address-card"></i> تواصل معنا</h4>
+                <ul class="contact-info-list">
+                    <li><i class="fas fa-phone-alt"></i> <a href="tel:<?php echo esc_attr(get_theme_mod('alzaytoon_phone', '')); ?>"><?php echo esc_html(get_theme_mod('alzaytoon_phone', 'رقم الهاتف')); ?></a></li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/<?php echo esc_attr(get_theme_mod('alzaytoon_whatsapp', '')); ?>">واتساب الرسمي</a></li>
+                    <li><i class="far fa-envelope"></i> <a href="mailto:info@zaytoon.com">info@zaytoon.com</a></li>
+                </ul>
+                
+                <div class="legal-links">
+                    <a href="#"><i class="fas fa-shield-alt"></i> سياسة الخصوصية</a>
+                    <a href="#"><i class="fas fa-file-contract"></i> الشروط والأحكام</a>
+                    <a href="<?php echo home_url('/contact'); ?>"><i class="fas fa-headset"></i> اتصل بنا</a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom-copyright-strip">
-            <p>جميع الحقوق محفوظة ومحمية برمجياً وقانونياً &copy; لشبكة حي الزيتون الإعلامية <?php echo date('Y'); ?></p>
-            <p style="font-size:11px; color:#aaa; margin-top:5px;">تطوير وهندسة وتصميم: م. خالد البيك</p>
+        
+        <!-- الصف الثاني: حقوق الملكية والبنر السفلي -->
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; <?php echo date('Y'); ?> شبكة حي الزيتون الإعلامية – تصميم وتطوير <strong>م. خالد البيك</strong></p>
+            </div>
+            <div class="footer-badge">
+                <span class="cert-badge"><i class="fas fa-check-circle"></i> منصة معتمدة رسمياً</span>
+                <span class="version-badge">الإصدار 6.0</span>
+            </div>
         </div>
+        
     </div>
 </footer>
 
+<!-- الأزرار العائمة (واتساب وفيسبوك) كما هي -->
 <div class="floating-social-anchor-box">
     <a href="https://wa.me/<?php echo esc_attr(get_theme_mod('alzaytoon_whatsapp', '')); ?>" class="float-btn-item f-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="<?php echo esc_url(get_theme_mod('alzaytoon_facebook', '#')); ?>" class="float-btn-item f-facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
 </div>
 
+<!-- النافذة المنبثقة الموحدة (كما هي موجودة سابقاً - احتفظ بها) -->
 <div id="govUnifiedModal" class="gov-modal-overlay">
     <div class="gov-modal-container">
         <span class="gov-modal-close-icon" onclick="closeGovModal()">&times;</span>
@@ -78,92 +137,63 @@
 </div>
 
 <script>
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navUl = document.getElementById('navUl');
-    const mobileCloseMenu = document.getElementById('mobileCloseMenu');
-    if(mobileToggle && navUl) { mobileToggle.addEventListener('click', () => { navUl.classList.add('mobile-active-ul'); }); }
-    if(mobileCloseMenu && navUl) { mobileCloseMenu.addEventListener('click', () => { navUl.classList.remove('mobile-active-ul'); }); }
-
-    function openGovModal(type) {
-        const modal = document.getElementById('govUnifiedModal');
-        const hiddenType = document.getElementById('hiddenFormType');
-        const dTitle = document.getElementById('modalDynamicTitle');
-        const lblName = document.getElementById('lblNameField');
-        const lblPhone = document.getElementById('lblPhoneAddress');
-        const lblTitle = document.getElementById('lblFormTitle');
-        const lblContent = document.getElementById('lblFormContent');
-        const lblDate = document.getElementById('lblEndDate');
-        
-        hiddenType.value = type;
-        
-        const num1 = Math.floor(Math.random() * 9) + 1; const num2 = Math.floor(Math.random() * 9) + 1;
-        document.getElementById('captchaMathOp').innerText = `${num1} + ${num2} =`;
-        document.getElementById('captchaCorrectValue').value = num1 + num2;
-        
-        // إعادة تعيين التسميات الافتراضية
-        lblName.innerText = 'الاسم الكامل أو اسم العضوية:';
-        lblDate.innerText = 'تاريخ انتهاء النشر / موعد الفعالية (إن وجد):';
-
-        if (type === 'lost') {
-            dTitle.innerHTML = '<i class="fas fa-search"></i> نظام الإبلاغ المركزي عن المفقودات وحمايتها';
-            lblPhone.innerText = 'رقم جوال للتواصل / مكان الفقد والاتصال *'; lblTitle.innerText = 'ما الشيء المفقود؟ (عنوان البلاغ) *'; lblContent.innerText = 'تفاصيل أخرى، أوصاف المفقود ومكان العثور المتوقع *';
-        } else if (type === 'person') {
-            dTitle.innerHTML = '<i class="fas fa-award" style="color:#d4af37;"></i> بوابة ترشيح شخصية الأسبوع';
-            lblPhone.innerText = 'رقم جوالك (للتواصل في حال تم اعتماد الترشيح) *'; lblTitle.innerText = 'الاسم الرباعي للشخصية المرشحة *'; lblContent.innerText = 'اكتب نبذة وافية عن الشخصية، إنجازاتها، ومساهماتها في حي الزيتون ولماذا تستحق التكريم *';
-        } else if (type === 'events') {
-            dTitle.innerHTML = '<i class="far fa-calendar-check" style="color:#2ecc71;"></i> بوابة تسجيل الفعاليات والمبادرات المجتمعية';
-            lblName.innerText = 'الجهة المنظمة / اسم المبادرة:'; lblPhone.innerText = 'رقم جوال منسق الفعالية للتواصل *'; lblTitle.innerText = 'اسم الفعالية أو المبادرة *'; lblContent.innerText = 'تفاصيل الفعالية، أهدافها، والموقع المخصص لها *'; lblDate.innerText = 'تاريخ ووقت بدء الفعالية *';
-        } else if (type === 'news') {
-            dTitle.innerHTML = '<i class="far fa-newspaper" style="color:#2980b9;"></i> بوابة استقبال الأخبار والتغطيات المحلية';
-            lblName.innerText = 'اسم المراسل / المواطن صاحب الخبر:'; lblPhone.innerText = 'رقم الجوال للتواصل (لن يتم نشره) *'; lblTitle.innerText = 'عنوان الخبر أو التغطية *'; lblContent.innerText = 'اكتب تفاصيل الحدث ومكانه بشكل كامل وواضح *'; lblDate.innerText = 'تاريخ وقوع الحدث:';
-        } else {
-            dTitle.innerHTML = '<i class="fas fa-file-signature"></i> بوابة الديوان الإلكتروني لتقديم طلبات المناشدات والدعم';
-            lblPhone.innerText = 'رقم الجوال / العنوان السكني الحالي للحالة *'; lblTitle.innerText = 'موضوع وعنوان المناشدة الرئيسي والعاجل *'; lblContent.innerText = 'تفاصيل أخرى وشرح كامل ومستوفى للظروف والاستغاثة *';
-        }
-        modal.style.display = 'flex';
-    }
+// دوال النافذة المنبثقة (موجودة مسبقاً، نحتفظ بها)
+function openGovModal(type) {
+    const modal = document.getElementById('govUnifiedModal');
+    const hiddenType = document.getElementById('hiddenFormType');
+    const dTitle = document.getElementById('modalDynamicTitle');
+    const lblName = document.getElementById('lblNameField');
+    const lblPhone = document.getElementById('lblPhoneAddress');
+    const lblTitle = document.getElementById('lblFormTitle');
+    const lblContent = document.getElementById('lblFormContent');
+    const lblDate = document.getElementById('lblEndDate');
     
-    function closeGovModal() { document.getElementById('govUnifiedModal').style.display = 'none'; }
-    window.onclick = function(e) { if(e.target == document.getElementById('govUnifiedModal')) closeGovModal(); }
+    hiddenType.value = type;
+    
+    const num1 = Math.floor(Math.random() * 9) + 1; const num2 = Math.floor(Math.random() * 9) + 1;
+    document.getElementById('captchaMathOp').innerText = `${num1} + ${num2} =`;
+    document.getElementById('captchaCorrectValue').value = num1 + num2;
+    
+    lblName.innerText = 'الاسم الكامل أو اسم العضوية:';
+    lblDate.innerText = 'تاريخ انتهاء النشر / موعد الفعالية (إن وجد):';
 
-    const govUnifiedForm = document.getElementById('govUnifiedForm');
-    if(govUnifiedForm) {
-        govUnifiedForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('govFormSubmitBtn');
-            const msg = document.getElementById('govFormStatusResponse');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري معالجة الطلب...'; btn.disabled = true;
-            fetch('<?php echo admin_url('admin-ajax.php'); ?>', { method: 'POST', body: new FormData(govUnifiedForm) })
-            .then(res => res.json()).then(data => {
-                btn.innerHTML = 'إرسال المعاملة فوراً للأنظمة'; btn.disabled = false; msg.innerText = data.data.message;
-                if(data.success) { msg.style.color = '#115c38'; govUnifiedForm.reset(); setTimeout(() => { closeGovModal(); msg.innerText = ''; }, 3500); } 
-                else { msg.style.color = '#e74c3c'; const num1 = Math.floor(Math.random() * 9) + 1; const num2 = Math.floor(Math.random() * 9) + 1; document.getElementById('captchaMathOp').innerText = `${num1} + ${num2} =`; document.getElementById('captchaCorrectValue').value = num1 + num2; }
-            }).catch(() => { btn.innerHTML = 'إرسال المعاملة فوراً للأنظمة'; btn.disabled = false; msg.style.color = '#e74c3c'; msg.innerText = 'خطأ حمايتي سحابي.'; });
-        });
+    if (type === 'lost') {
+        dTitle.innerHTML = '<i class="fas fa-search"></i> نظام الإبلاغ المركزي عن المفقودات وحمايتها';
+        lblPhone.innerText = 'رقم جوال للتواصل / مكان الفقد والاتصال *'; lblTitle.innerText = 'ما الشيء المفقود؟ (عنوان البلاغ) *'; lblContent.innerText = 'تفاصيل أخرى، أوصاف المفقود ومكان العثور المتوقع *';
+    } else if (type === 'person') {
+        dTitle.innerHTML = '<i class="fas fa-award" style="color:#d4af37;"></i> بوابة ترشيح شخصية الأسبوع';
+        lblPhone.innerText = 'رقم جوالك (للتواصل في حال تم اعتماد الترشيح) *'; lblTitle.innerText = 'الاسم الرباعي للشخصية المرشحة *'; lblContent.innerText = 'اكتب نبذة وافية عن الشخصية، إنجازاتها، ومساهماتها في حي الزيتون ولماذا تستحق التكريم *';
+    } else if (type === 'events') {
+        dTitle.innerHTML = '<i class="far fa-calendar-check" style="color:#2ecc71;"></i> بوابة تسجيل الفعاليات والمبادرات المجتمعية';
+        lblName.innerText = 'الجهة المنظمة / اسم المبادرة:'; lblPhone.innerText = 'رقم جوال منسق الفعالية للتواصل *'; lblTitle.innerText = 'اسم الفعالية أو المبادرة *'; lblContent.innerText = 'تفاصيل الفعالية، أهدافها، والموقع المخصص لها *'; lblDate.innerText = 'تاريخ ووقت بدء الفعالية *';
+    } else if (type === 'news') {
+        dTitle.innerHTML = '<i class="far fa-newspaper" style="color:#2980b9;"></i> بوابة استقبال الأخبار والتغطيات المحلية';
+        lblName.innerText = 'اسم المراسل / المواطن صاحب الخبر:'; lblPhone.innerText = 'رقم الجوال للتواصل (لن يتم نشره) *'; lblTitle.innerText = 'عنوان الخبر أو التغطية *'; lblContent.innerText = 'اكتب تفاصيل الحدث ومكانه بشكل كامل وواضح *'; lblDate.innerText = 'تاريخ وقوع الحدث:';
+    } else {
+        dTitle.innerHTML = '<i class="fas fa-file-signature"></i> بوابة الديوان الإلكتروني لتقديم طلبات المناشدات والدعم';
+        lblPhone.innerText = 'رقم الجوال / العنوان السكني الحالي للحالة *'; lblTitle.innerText = 'موضوع وعنوان المناشدة الرئيسي والعاجل *'; lblContent.innerText = 'تفاصيل أخرى وشرح كامل ومستوفى للظروف والاستغاثة *';
     }
+    modal.style.display = 'flex';
+}
 
-    function triggerRoyalPollSubmit() {
-        const options = document.querySelectorAll('input[name="poll_vote_radio"]'); let checked = false; options.forEach(radio => { if(radio.checked) checked = true; });
-        if(!checked) { alert('الرجاء تحديد خيار التصويت الرسمي أولاً قبل الاعتماد.'); return; }
-        document.getElementById('barFill1').style.width = '60%'; document.getElementById('percentTxt1').innerText = '60%';
-        if(document.getElementById('barFill2')) { document.getElementById('barFill2').style.width = '25%'; document.getElementById('percentTxt2').innerText = '25%'; }
-        if(document.getElementById('barFill3')) { document.getElementById('barFill3').style.width = '15%'; document.getElementById('percentTxt3').innerText = '15%'; }
-        document.querySelector('#royalPollForm button').style.display = 'none'; document.getElementById('pollAckMsg').style.display = 'block';
-    }
+function closeGovModal() { document.getElementById('govUnifiedModal').style.display = 'none'; }
+window.onclick = function(e) { if(e.target == document.getElementById('govUnifiedModal')) closeGovModal(); }
 
-    const tickerText = "<?php echo esc_js(get_theme_mod('alzaytoon_ticker_text', 'باقي 5 أيام على الإطلاق الرسمي للمنصة الإلكترونية الموحدة لحي الزيتون... شاركنا الآن برأيك وبلاغاتك.')); ?>";
-    const typingElement = document.getElementById('typingTickerElement');
-    let index = 0;
-    function typeEffect() {
-        if (index < tickerText.length) {
-            typingElement.innerHTML += tickerText.charAt(index);
-            index++;
-            setTimeout(typeEffect, 45);
-        } else {
-            setTimeout(() => { typingElement.innerHTML = ""; index = 0; typeEffect(); }, 5000);
-        }
-    }
-    if(typingElement) { document.addEventListener('DOMContentLoaded', typeEffect); }
+const govUnifiedForm = document.getElementById('govUnifiedForm');
+if(govUnifiedForm) {
+    govUnifiedForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('govFormSubmitBtn');
+        const msg = document.getElementById('govFormStatusResponse');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري معالجة الطلب...'; btn.disabled = true;
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>', { method: 'POST', body: new FormData(govUnifiedForm) })
+        .then(res => res.json()).then(data => {
+            btn.innerHTML = 'إرسال المعاملة فوراً للأنظمة'; btn.disabled = false; msg.innerText = data.data.message;
+            if(data.success) { msg.style.color = '#115c38'; govUnifiedForm.reset(); setTimeout(() => { closeGovModal(); msg.innerText = ''; }, 3500); } 
+            else { msg.style.color = '#e74c3c'; const num1 = Math.floor(Math.random() * 9) + 1; const num2 = Math.floor(Math.random() * 9) + 1; document.getElementById('captchaMathOp').innerText = `${num1} + ${num2} =`; document.getElementById('captchaCorrectValue').value = num1 + num2; }
+        }).catch(() => { btn.innerHTML = 'إرسال المعاملة فوراً للأنظمة'; btn.disabled = false; msg.style.color = '#e74c3c'; msg.innerText = 'خطأ حمايتي سحابي.'; });
+    });
+}
 </script>
 
 <?php wp_footer(); ?>
