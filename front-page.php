@@ -1,434 +1,885 @@
 <?php get_header(); ?>
 
 <style>
-    /* =========================================================================
-       تنسيقات السلايدر المطور المصلحة لضبط الـ Layout ومنع التداخل البصري
-    ========================================================================= */
-    .royal-hero-slider {
-        position: relative;
-        height: 480px;
-        border-radius: 16px;
-        overflow: hidden;
+    /* ==============================================
+       الأنماط المدمجة للصفحة الرئيسية الخرافية
+    ============================================== */
+    .hero-news-master {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 25px;
         margin-bottom: 45px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-        background: #000;
-        direction: ltr; /* لضمان انزلاق عناصر التحكم بشكل صحيح */
     }
-    .royal-hero-slider * {
-        direction: rtl; /* إعادة النص للوضع الطبيعي بالداخل */
+    
+    /* السلايدر الرئيسي */
+    .main-slider-area {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        height: 480px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     }
-    .hero-slide {
+    .slider-container {
+        position: relative;
+        height: 100%;
+    }
+    .slider-slide {
         position: absolute;
         inset: 0;
         background-size: cover;
         background-position: center;
         opacity: 0;
-        z-index: 1;
-        transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-        transform: scale(1.02);
+        transition: opacity 0.8s ease;
     }
-    .hero-slide.active {
+    .slider-slide.active {
         opacity: 1;
-        z-index: 2;
-        transform: scale(1);
+        z-index: 1;
     }
-    .hero-overlay {
+    .slider-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 100%);
+        background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.3));
+        z-index: 2;
+    }
+    .slider-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 40px;
+        color: #fff;
         z-index: 3;
     }
-    .hero-content {
-        position: relative;
-        z-index: 5;
-        max-width: 720px;
-        padding: 80px 50px;
-        color: #fff;
-    }
-    .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(255,255,255,0.15);
-        border: 1px solid rgba(255,255,255,0.2);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        padding: 6px 16px;
-        border-radius: 100px;
-        font-size: 12.5px;
+    .slider-badge {
+        display: inline-block;
+        background: #d4af37;
+        padding: 5px 15px;
+        border-radius: 30px;
+        font-size: 12px;
         font-weight: 800;
-        margin-bottom: 20px;
-    }
-    .hero-content h1 {
-        font-size: 32px;
-        line-height: 1.4;
         margin-bottom: 15px;
+    }
+    .slider-content h2 {
+        font-size: 32px;
         font-weight: 900;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        margin-bottom: 12px;
     }
-    .hero-content p {
-        font-size: 15.5px;
-        line-height: 1.7;
-        color: rgba(255,255,255,0.85);
-        margin-bottom: 25px;
+    .slider-content p {
+        font-size: 15px;
+        opacity: 0.9;
+        margin-bottom: 20px;
+        max-width: 80%;
     }
-    .slider-controls {
+    .slider-btn {
+        background: #d4af37;
+        color: #115c38;
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-weight: 800;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .slider-dots {
         position: absolute;
-        bottom: 25px;
-        left: 25px;
+        bottom: 20px;
+        right: 20px;
         z-index: 10;
         display: flex;
         gap: 10px;
-        direction: ltr;
     }
-    .slider-controls button {
-        width: 44px;
-        height: 44px;
-        border: none;
+    .slider-dot {
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
-        background: rgba(255,255,255,0.2);
-        color: #fff;
-        font-size: 15px;
+        background: rgba(255,255,255,0.5);
         cursor: pointer;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        transition: 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
-    .slider-controls button:hover {
-        background: var(--gold, #d4af37);
-        color: #111;
-        transform: scale(1.05);
+    .slider-dot.active {
+        background: #d4af37;
+        width: 25px;
+        border-radius: 10px;
     }
-
-    /* =========================================================================
-       تنسيقات لافتة إرسال المقالات وبلوك التفاعل السفلي المطور
-    ========================================================================= */
-    .interaction-banner-royal {
-        background: linear-gradient(135deg, #0f5132 0%, #062416 100%);
-        border-right: 5px solid var(--gold, #d4af37);
-        border-radius: 14px;
-        padding: 30px 35px;
+    
+    /* الشريط الجانبي للأخبار السريعة */
+    .quick-news-sidebar {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        border: 1px solid #eee;
+    }
+    .quick-news-header {
+        background: #115c38;
         color: #fff;
-        margin-bottom: 30px;
+        padding: 15px 20px;
+        font-weight: 800;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
-        gap: 20px;
-        box-shadow: 0 10px 30px rgba(15,81,50,0.12);
+    }
+    .quick-news-list {
+        padding: 10px 0;
+    }
+    .quick-news-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        border-bottom: 1px solid #f0f0f0;
+        transition: 0.3s;
+    }
+    .quick-news-item:hover {
+        background: #f9f9f9;
+        transform: translateX(-5px);
+    }
+    .quick-news-img {
+        width: 65px;
+        height: 55px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    .quick-news-title {
+        flex: 1;
+        font-size: 13px;
+        font-weight: 700;
+        color: #222;
+        text-decoration: none;
+    }
+    .quick-news-title:hover {
+        color: #115c38;
     }
     
-    @media (max-width: 768px) {
-        .royal-hero-slider { height: 400px; }
-        .hero-content { padding: 40px 25px; }
-        .hero-content h1 { font-size: 24px; }
-        .hero-content p { font-size: 14px; }
-        .interaction-banner-royal { padding: 25px; text-align: center; justify-content: center; }
+    /* أزرار الخدمات السريعة */
+    .services-5grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 15px;
+        margin: 40px 0;
+    }
+    .service-card {
+        background: #fff;
+        padding: 25px 15px;
+        text-align: center;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+    }
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(17,92,56,0.1);
+        border-color: #d4af37;
+    }
+    .service-icon {
+        width: 60px;
+        height: 60px;
+        background: #f0f5f2;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-size: 26px;
+    }
+    .service-card.help .service-icon { color: #2ecc71; }
+    .service-card.lost .service-icon { color: #e74c3c; }
+    .service-card.news .service-icon { color: #3498db; }
+    .service-card.person .service-icon { color: #d4af37; }
+    .service-card.events .service-icon { color: #f39c12; }
+    .service-title {
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    .service-desc {
+        font-size: 11px;
+        color: #888;
+    }
+    
+    /* شبكة المحتوى الرئيسية */
+    .home-main-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+        margin: 45px 0;
+    }
+    
+    /* أخبار رئيسية مع سلايدر داخلي */
+    .featured-news-area {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #eee;
+    }
+    .section-head {
+        background: #115c38;
+        color: #fff;
+        padding: 15px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .section-head h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+    .section-head i {
+        color: #d4af37;
+        margin-left: 8px;
+    }
+    .news-feature-slider {
+        position: relative;
+        height: 320px;
+        overflow: hidden;
+    }
+    .feature-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: 0.5s;
+    }
+    .feature-slide.active {
+        opacity: 1;
+    }
+    .feature-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    }
+    .feature-content {
+        position: absolute;
+        bottom: 0;
+        padding: 25px;
+        color: #fff;
+    }
+    .feature-content h4 {
+        font-size: 18px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+    .news-list-grid {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .news-list-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .news-list-img {
+        width: 80px;
+        height: 60px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+    .news-list-info {
+        flex: 1;
+    }
+    .news-list-title {
+        font-size: 14px;
+        font-weight: 800;
+        margin-bottom: 5px;
+    }
+    .news-list-title a {
+        color: #222;
+        text-decoration: none;
+    }
+    .news-list-title a:hover {
+        color: #115c38;
+    }
+    .news-list-date {
+        font-size: 11px;
+        color: #999;
+    }
+    
+    /* بطاقات المناشدات والمفقودات في السايدبار */
+    .appeals-list-compact {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #eee;
+        margin-bottom: 25px;
+    }
+    .appeal-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    .appeal-badge {
+        font-size: 10px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-weight: 800;
+        margin-left: 12px;
+    }
+    .badge-urgent { background: #e74c3c; color: #fff; }
+    .badge-necessary { background: #e67e22; color: #fff; }
+    .badge-following { background: #3498db; color: #fff; }
+    .badge-new { background: #2ecc71; color: #fff; }
+    .appeal-title {
+        flex: 1;
+        font-size: 13px;
+        font-weight: 700;
+        color: #333;
+        text-decoration: none;
+    }
+    .appeal-date {
+        font-size: 11px;
+        color: #aaa;
+    }
+    
+    /* شخصية الأسبوع */
+    .person-widget {
+        background: linear-gradient(135deg, #115c38 0%, #0b3d25 100%);
+        border-radius: 20px;
+        padding: 25px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .person-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 3px solid #d4af37;
+        margin: 0 auto 15px;
+        object-fit: cover;
+    }
+    .person-name {
+        color: #d4af37;
+        font-size: 18px;
+        font-weight: 900;
+        margin-bottom: 8px;
+    }
+    .person-bio {
+        color: #ddd;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+    
+    /* استطلاع الرأي */
+    .poll-widget {
+        background: #fff;
+        border-radius: 20px;
+        padding: 25px;
+        border: 1px solid #eee;
+        margin-bottom: 25px;
+    }
+    .poll-question {
+        font-size: 15px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .poll-option {
+        margin-bottom: 15px;
+    }
+    .poll-option label {
+        font-weight: 700;
+        font-size: 13px;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .poll-bar {
+        height: 8px;
+        background: #eee;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .poll-fill {
+        height: 100%;
+        background: #115c38;
+        width: 0%;
+        transition: width 0.8s;
+    }
+    
+    /* دليل الطوارئ */
+    .emergency-widget {
+        background: #fff;
+        border-radius: 20px;
+        padding: 20px;
+        border: 1px solid #eee;
+        border-top: 4px solid #e74c3c;
+    }
+    .emergency-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    .emergency-number {
+        font-family: monospace;
+        font-weight: 900;
+        font-size: 16px;
+    }
+    
+    /* شبكة الأقسام السفلية (أخبار مقسمة) */
+    .bottom-sections {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin: 50px 0;
+    }
+    .bottom-section-card {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #eee;
+    }
+    .bottom-section-header {
+        background: #115c38;
+        color: #fff;
+        padding: 12px 20px;
+        font-weight: 800;
+    }
+    .bottom-section-list {
+        padding: 15px;
+    }
+    .bottom-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .bottom-item:last-child {
+        border-bottom: none;
+    }
+    .bottom-item-icon {
+        width: 8px;
+        height: 8px;
+        background: #d4af37;
+        border-radius: 50%;
+    }
+    .bottom-item-title {
+        flex: 1;
+        font-size: 13px;
+        font-weight: 700;
+        color: #333;
+        text-decoration: none;
+    }
+    
+    @media(max-width: 992px) {
+        .hero-news-master { grid-template-columns: 1fr; }
+        .services-5grid { grid-template-columns: repeat(3, 1fr); }
+        .home-main-grid { grid-template-columns: 1fr; }
+        .bottom-sections { grid-template-columns: 1fr; }
+    }
+    @media(max-width: 600px) {
+        .services-5grid { grid-template-columns: repeat(2, 1fr); }
     }
 </style>
 
-<div class="container home-layout official-container royal-layout gov-portal-wrapper">
+<div class="container gov-portal-wrapper">
     
-    <section class="royal-hero-slider">
-        <?php
-        $slider_query = new WP_Query(array('post_type' => array('events', 'news'), 'posts_per_page' => 4, 'post_status' => 'publish'));
-        $slide_index = 0;
-        if ($slider_query->have_posts()) : while ($slider_query->have_posts()) : $slider_query->the_post();
-            $slider_bg_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'full') : 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1600';
-            $active_class = ($slide_index == 0) ? 'active' : '';
-        ?>
-        <div class="hero-slide <?php echo $active_class; ?>" style="background-image:url('<?php echo esc_url($slider_bg_url); ?>');">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <span class="hero-badge">
-                    <i class="fas fa-bolt" style="color:var(--gold);"></i> <?php echo (get_post_type() == 'events') ? 'تغطية مناسبات' : 'أخبار عاجلة'; ?>
-                </span>
-                <h1><?php the_title(); ?></h1>
-                <p><?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?></p>
-                <div class="hero-buttons">
-                    <a href="<?php the_permalink(); ?>" class="hero-btn primary" style="background:linear-gradient(135deg, var(--gold), #f8dc7c); color:#111; padding:10px 24px; border-radius:8px; font-weight:bold; text-decoration:none; display:inline-flex; align-items:center; gap:8px;"><i class="fas fa-newspaper"></i> اقرأ التفاصيل</a>
-                </div>
-            </div>
-        </div>
-        <?php $slide_index++; endwhile; wp_reset_postdata(); else: ?>
-        <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1600');">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <span class="hero-badge"><i class="fas fa-bolt"></i> منصة إلكترونية حديثة</span>
-                <h1>بوابة إعلامية ومجتمعية متكاملة</h1>
-                <p>تابع الأخبار والمبادرات والمناشدات والمفقودات عبر واجهة احترافية حديثة.</p>
-            </div>
-        </div>
-        <?php endif; ?>
-
-        <div class="slider-controls">
-            <button id="nextSlide"><i class="fas fa-chevron-right"></i></button>
-            <button id="prevSlide"><i class="fas fa-chevron-left"></i></button>
-        </div>
-    </section>
-
-    <div class="gov-main-grid-layout">
+    <!-- ==================== القسم الأول: السلايدر + أخبار جانبية ==================== -->
+    <div class="hero-news-master">
         
-        <div class="gov-main-content-column">
-            
-            <section class="gov-home-section" style="margin-bottom: 50px;">
-                <div class="gov-section-header-v2">
-                    <h2 class="gov-section-title-v2"><i class="far fa-newspaper"></i> أحدث الأخبار والتغطيات المحلية</h2>
-                    <div>
-                        <button class="gov-action-btn-sm" onclick="openGovModal('news')"><i class="fas fa-plus"></i> أرسل خبراً</button>
-                        <a href="<?php echo get_post_type_archive_link('news'); ?>" class="gov-action-btn-sm" style="background:#f8fafc; color:var(--primary); border:1px solid #ccc; box-shadow:none; margin-right:5px;">المزيد &laquo;</a>
-                    </div>
-                </div>
-                <div class="gov-home-news-grid">
-                    <?php
-                    $news_query = new WP_Query(array('post_type' => 'news', 'posts_per_page' => 4, 'post_status' => 'publish'));
-                    if ($news_query->have_posts()) : while ($news_query->have_posts()) : $news_query->the_post();
-                    ?>
-                    <article class="gov-h-news-card">
-                        <div class="gov-h-news-img">
-                            <a href="<?php the_permalink(); ?>">
-                                <?php if (has_post_thumbnail()) : the_post_thumbnail('medium_large'); else : ?>
-                                    <img src="https://picsum.photos/400/250?random=<?php echo get_the_ID(); ?>">
-                                <?php endif; ?>
-                            </a>
-                        </div>
-                        <div class="gov-h-news-body">
-                            <h3 class="gov-h-news-title"><a href="<?php the_permalink(); ?>"><?php echo wp_trim_words(get_the_title(), 12, '...'); ?></a></h3>
-                            <div class="gov-h-news-meta">
-                                <span><i class="far fa-calendar-alt"></i> <?php echo get_the_date('d M Y'); ?></span>
-                                <span><i class="far fa-eye"></i> <?php echo alzaytoon_get_post_views(get_the_ID()); ?> قراءة</span>
-                            </div>
-                        </div>
-                    </article>
-                    <?php endwhile; wp_reset_postdata(); endif; ?>
-                </div>
-            </section>
-
-            <section class="gov-home-section" style="margin-bottom: 50px;">
-                <div class="gov-section-header-v2">
-                    <h2 class="gov-section-title-v2"><i class="fas fa-hand-holding-heart"></i> ديوان المناشدات والمساعدات العامة</h2>
-                    <div>
-                        <button class="gov-action-btn-sm" style="background:#2ecc71;" onclick="openGovModal('help')"><i class="fas fa-bullhorn"></i> تقديم مناشدة عاجلة</button>
-                    </div>
-                </div>
-                <div class="gov-list-wrapper">
-                    <?php
-                    $help_query = new WP_Query(array('post_type' => 'help', 'posts_per_page' => 4, 'post_status' => 'publish'));
-                    if ($help_query->have_posts()) : while ($help_query->have_posts()) : $help_query->the_post();
-                        $badge = get_post_meta(get_the_ID(), '_appeal_badge_status', true);
-                        $sender = get_post_meta(get_the_ID(), '_gov_sender_name', true);
-                        $badge_class = 'badge-new'; $badge_txt = 'جديد'; $badge_ico = 'fas fa-star';
-                        if($badge == 'urgent') { $badge_class = 'badge-urgent'; $badge_txt = 'عاجلة'; $badge_ico = 'fas fa-exclamation-triangle'; }
-                        elseif($badge == 'necessary') { $badge_class = 'badge-necessary'; $badge_txt = 'ضرورية'; $badge_ico = 'fas fa-exclamation-circle'; }
-                        elseif($badge == 'following') { $badge_class = 'badge-following'; $badge_txt = 'قيد المتابعة'; $badge_ico = 'fas fa-sync'; }
-                    ?>
-                    <div class="gov-list-row-item border-gold">
-                        <span class="appeal-gov-tag <?php echo $badge_class; ?>" style="margin:0; min-width:95px; text-align:center;"><i class="<?php echo $badge_ico; ?>"></i> <?php echo $badge_txt; ?></span>
-                        <div class="gov-list-content">
-                            <a href="<?php the_permalink(); ?>" class="gov-list-title"><?php the_title(); ?></a>
-                            <div class="gov-list-details">
-                                <?php if(!empty($sender)) : ?><span><i class="fas fa-user-tie" style="color:var(--primary);"></i> مقدم الطلب: <?php echo esc_html($sender); ?></span><?php endif; ?>
-                            </div>
-                        </div>
-                        <span class="gov-list-date"><i class="far fa-calendar-check"></i> <?php echo get_the_date('d/m/Y'); ?></span>
-                    </div>
-                    <?php endwhile; wp_reset_postdata(); endif; ?>
-                </div>
-            </section>
-
-            <section class="gov-home-section" style="margin-bottom: 50px;">
-                <div class="gov-section-header-v2">
-                    <h2 class="gov-section-title-v2"><i class="far fa-calendar-alt"></i> الفعاليات والمناسبات المجتمعية الحالية</h2>
-                    <a href="<?php echo get_post_type_archive_link('events'); ?>" class="gov-action-btn-sm" style="background:#f8fafc; color:var(--primary); border:1px solid #ccc; box-shadow:none;">أرشيف المناسبات &laquo;</a>
-                </div>
-                <div class="gov-home-news-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
-                    <?php
-                    $events_block_query = new WP_Query(array('post_type' => 'events', 'posts_per_page' => 3, 'post_status' => 'publish'));
-                    if ($events_block_query->have_posts()) : while ($events_block_query->have_posts()) : $events_block_query->the_post();
-                    ?>
-                    <article class="gov-h-news-card" style="border-top: 3px solid var(--gold);">
-                        <div class="gov-h-news-img" style="height: 160px;">
-                            <a href="<?php the_permalink(); ?>">
-                                <?php if (has_post_thumbnail()) : the_post_thumbnail('medium_large'); else : ?>
-                                    <img src="https://picsum.photos/400/250?random=<?php echo get_the_ID(); ?>">
-                                <?php endif; ?>
-                            </a>
-                        </div>
-                        <div class="gov-h-news-body" style="padding: 15px;">
-                            <h4 style="font-size:15px; font-weight:800; line-height:1.5; margin:0 0 10px 0;"><a href="<?php the_permalink(); ?>" style="color:#111; text-decoration:none;"><?php the_title(); ?></a></h4>
-                            <p style="font-size:12.5px; color:#666; margin:0 0 12px 0; line-height:1.6;"><?php echo wp_trim_words(get_the_excerpt(), 14, '...'); ?></p>
-                            <div style="font-size:11.5px; color:#999; border-top:1px solid #f1f5f9; padding-top:8px;"><i class="far fa-clock"></i> موعد الفعالية: <?php echo get_the_date('d F Y'); ?></div>
-                        </div>
-                    </article>
-                    <?php endwhile; wp_reset_postdata(); endif; ?>
-                </div>
-            </section>
-
-            <section class="gov-home-section" style="margin-bottom: 50px;">
-                <div class="gov-section-header-v2">
-                    <h2 class="gov-section-title-v2"><i class="fas fa-search-location"></i> آخر بلاغات المفقودات والأمانات المركزية</h2>
-                    <a href="<?php echo get_post_type_archive_link('lost'); ?>" class="gov-action-btn-sm" style="background:#f8fafc; color:var(--primary); border:1px solid #ccc; box-shadow:none;">بوابة المفقودات كاملة &laquo;</a>
-                </div>
-                <div class="lost-articles-list-vertical-wrapper" style="display: flex; flex-direction: column; gap: 12px;">
-                    <?php 
-                    $lost_query = new WP_Query(array('post_type' => 'lost', 'posts_per_page' => 3, 'post_status' => 'publish'));
-                    if($lost_query->have_posts()) : while($lost_query->have_posts()) : $lost_query->the_post(); 
-                        $p_id = get_the_ID();
-                        $card_sender = get_post_meta($p_id, '_gov_sender_name', true);
-                        $card_phone = get_post_meta($p_id, '_gov_phone_address', true);
-                    ?>
-                    <div class="lost-list-row-item-box" style="display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1px solid #e2e8f0; border-right: 4px solid var(--gold); padding: 15px 20px; border-radius: 6px; gap: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.01);">
-                        <div style="display: flex; flex-direction: column; gap: 6px; flex: 1;">
-                            <h3 style="font-size: 15.5px; font-weight: 800; margin: 0;"><a href="<?php the_permalink(); ?>" style="color:#1a1a1a; text-decoration:none;"><?php the_title(); ?></a></h3>
-                            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px; font-size: 12.5px; color: #666;">
-                                <?php if(!empty($card_sender)) : ?><span><i class="fas fa-user-circle" style="color:var(--primary);"></i> <strong>المعلن:</strong> <?php echo esc_html($card_sender); ?></span><?php endif; ?>
-                                <?php if(!empty($card_phone)) : ?><span style="color:var(--primary); font-weight:700;"><i class="fas fa-phone-alt"></i> <?php echo esc_html($card_phone); ?></span><?php endif; ?>
-                            </div>
-                        </div>
-                        <span class="gov-list-date"><i class="far fa-calendar-check"></i> اليوم: <?php echo get_the_date('l, d/m'); ?></span>
-                    </div>
-                    <?php endwhile; wp_reset_postdata(); endif; ?>
-                </div>
-            </section>
-
-        </div>
-
-        <div class="gov-sidebar-column">
-            
-            <div class="sidebar-widget-gov" style="border-top:4px solid var(--gold); text-align:center;">
-                <h3 class="sidebar-widget-title" style="justify-content:center;"><i class="fas fa-award"></i> شخصية الأسبوع البارزة</h3>
+        <!-- السلايدر الرئيسي -->
+        <div class="main-slider-area">
+            <div class="slider-container" id="heroSlider">
                 <?php
-                $person_query = new WP_Query(array('post_type' => 'person', 'posts_per_page' => 1, 'post_status' => 'publish'));
-                if ($person_query->have_posts()) : while ($person_query->have_posts()) : $person_query->the_post();
-                if (has_post_thumbnail()) { the_post_thumbnail('medium', array('style'=>'width:110px;height:110px;border-radius:50%;margin:0 auto 15px;border:4px solid var(--gold);object-fit:cover;display:block; box-shadow:0 4px 10px rgba(0,0,0,0.1);')); }
+                $slider_posts = new WP_Query(array(
+                    'post_type' => array('news', 'events'),
+                    'posts_per_page' => 5,
+                    'post_status' => 'publish'
+                ));
+                $slide_index = 0;
+                if($slider_posts->have_posts()) :
+                    while($slider_posts->have_posts()) : $slider_posts->the_post();
+                    $img_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'full') : 'https://picsum.photos/1200/600?random=' . get_the_ID();
+                    $active_class = ($slide_index == 0) ? 'active' : '';
                 ?>
-                <h4 style="color:var(--primary); font-weight:900; font-size:16px; margin-bottom:8px;"><a href="<?php the_permalink(); ?>" style="color:inherit; text-decoration:none;"><?php the_title(); ?></a></h4>
-                <p style="font-size:13px; color:#555; line-height:1.6; margin-bottom:15px; text-align:justify;"><?php echo wp_trim_words(get_the_content(), 22, '...'); ?></p>
-                <a href="<?php the_permalink(); ?>" class="gov-action-btn-sm" style="display:inline-block;">السيرة الكاملة &laquo;</a>
+                <div class="slider-slide <?php echo $active_class; ?>" style="background-image: url('<?php echo $img_url; ?>');">
+                    <div class="slider-overlay"></div>
+                    <div class="slider-content">
+                        <span class="slider-badge">
+                            <?php echo (get_post_type() == 'events') ? '<i class="fas fa-calendar-alt"></i> فعالية' : '<i class="fas fa-newspaper"></i> خبر عاجل'; ?>
+                        </span>
+                        <h2><?php the_title(); ?></h2>
+                        <p><?php echo wp_trim_words(get_the_excerpt(), 18, '...'); ?></p>
+                        <a href="<?php the_permalink(); ?>" class="slider-btn">اقرأ التفاصيل <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                <?php $slide_index++; endwhile; wp_reset_postdata(); ?>
+                <div class="slider-dots" id="sliderDots"></div>
+                <?php else: ?>
+                <div class="slider-slide active" style="background-image: url('https://picsum.photos/1200/600');">
+                    <div class="slider-overlay"></div>
+                    <div class="slider-content">
+                        <span class="slider-badge"><i class="fas fa-bolt"></i> منصة جديدة</span>
+                        <h2>شبكة حي الزيتون</h2>
+                        <p>المنصة الرسمية لأخبار ومناشدات وخدمات حي الزيتون</p>
+                        <a href="#" class="slider-btn">اكتشف المزيد</a>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        
+        <!-- الشريط الجانبي: أحدث الأخبار المصغرة -->
+        <div class="quick-news-sidebar">
+            <div class="quick-news-header">
+                <span><i class="fas fa-bolt" style="color:#d4af37;"></i> أحدث الأخبار العاجلة</span>
+                <a href="<?php echo get_post_type_archive_link('news'); ?>" style="color:#fff; font-size:12px;">المزيد <i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="quick-news-list">
+                <?php
+                $quick_news = new WP_Query(array('post_type' => 'news', 'posts_per_page' => 5, 'post_status' => 'publish'));
+                if($quick_news->have_posts()) :
+                    while($quick_news->have_posts()) : $quick_news->the_post();
+                ?>
+                <div class="quick-news-item">
+                    <?php if(has_post_thumbnail()) : ?>
+                        <img class="quick-news-img" src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'thumbnail'); ?>" alt="">
+                    <?php else : ?>
+                        <img class="quick-news-img" src="https://picsum.photos/65/55?random=<?php echo get_the_ID(); ?>" alt="">
+                    <?php endif; ?>
+                    <a href="<?php the_permalink(); ?>" class="quick-news-title"><?php echo wp_trim_words(get_the_title(), 8, '...'); ?></a>
+                    <small style="font-size:10px; color:#aaa;"><?php echo get_the_date('d/m'); ?></small>
+                </div>
                 <?php endwhile; wp_reset_postdata(); endif; ?>
             </div>
-
-            <div class="sidebar-widget-gov poll-wrapper-box">
-                <h3 class="sidebar-widget-title"><i class="fas fa-poll-h"></i> استطلاع الرأي الرسمي</h3>
-                <h4 style="font-size:14px; margin-bottom:15px; font-weight:800; line-height:1.6; color:#222;"><?php echo get_theme_mod('alzaytoon_poll_question', 'ما رأيك في مستوى الخدمات المقدمة في حي الزيتون مؤخراً؟'); ?></h4>
-                <form id="royalPollForm">
-                    <?php for($i=1; $i<=3; $i++) {
-                        $opt_text = get_theme_mod('alzaytoon_poll_opt'.$i, 'الخيار ' . $i);
-                        if(!empty($opt_text)) :
-                    ?>
-                    <label class="poll-label-radio" style="display:block; margin-bottom:12px; position:relative; padding-right:20px; cursor:pointer;">
-                        <input type="radio" name="poll_vote_radio" value="<?php echo $i; ?>" style="position:absolute; right:0; top:4px; accent-color:var(--primary);">
-                        <span class="radio-custom-txt" style="font-size:13px; font-weight:700; color:#444;"><?php echo esc_html($opt_text); ?></span>
-                        <div class="poll-track-bg" style="width:100%; height:6px; background:#eee; margin-top:5px; border-radius:3px; overflow:hidden;"><div class="poll-fill-progress" id="barFill<?php echo $i; ?>" style="height:100%; background:var(--primary); width:0%; transition:width 1s;"></div></div>
-                        <span class="poll-percentage-num" id="percentTxt<?php echo $i; ?>" style="position:absolute; left:0; top:0; font-size:11px; font-weight:900; color:var(--primary);"></span>
-                    </label>
-                    <?php endif; } ?>
-                    <button type="button" class="gov-action-btn-sm" style="width:100%; justify-content:center; margin-top:10px;" onclick="triggerRoyalPollSubmit()"><i class="fas fa-check-circle"></i> اعتماد التصويت</button>
-                </form>
-                <p id="pollAckMsg" class="poll-success-ack" style="display:none; text-align:center; color:var(--primary); font-weight:bold; font-size:13px; margin-top:10px;">تم تسجيل تصويتك المعتمد، شكراً لك.</p>
-            </div>
-
-            <div class="sidebar-widget-gov" style="border-top:4px solid #ef4444;">
-                <h3 class="sidebar-widget-title" style="color:#ef4444;"><i class="fas fa-phone-volume"></i> دليل الطوارئ والاتصال للحي</h3>
-                <div style="display:flex; flex-direction:column; gap:10px;">
-                    <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #f9f9f9;">
-                        <span style="font-size:13px; font-weight:700; color:#333;"><i class="fas fa-ambulance" style="color:#ef4444; margin-left:6px;"></i> الإسعاف</span>
-                        <a href="tel:101" style="font-family:sans-serif !important; font-size:13px; font-weight:900; color:#ef4444;">101</a>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #f9f9f9;">
-                        <span style="font-size:13px; font-weight:700; color:#333;"><i class="fas fa-fire-extinguisher" style="color:#e67e22; margin-left:6px;"></i> الدفاع المدني</span>
-                        <a href="tel:102" style="font-family:sans-serif !important; font-size:13px; font-weight:900; color:#e67e22;">102</a>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; padding:8px 0;">
-                        <span style="font-size:13px; font-weight:700; color:#333;"><i class="fas fa-shield-alt" style="color:#3b82f6; margin-left:6px;"></i> الشرطة والنجدة</span>
-                        <a href="tel:100" style="font-family:sans-serif !important; font-size:13px; font-weight:900; color:#3b82f6;">100</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
-
-    <hr style="border: none; border-top: 1px dashed #cbd5e1; margin: 50px 0 35px 0;">
     
-    <section class="royal-interaction-footer-zone" style="margin-bottom: 30px;">
-        <div class="interaction-banner-royal">
-            <div style="max-width: 650px; text-align: right;">
-                <span style="background: rgba(212,175,55,0.2); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 12px; font-weight: 900; display: inline-block; margin-bottom: 10px;"><i class="fas fa-bullhorn"></i> لجان التكافل والمشاركة الأهلية المفتوحة</span>
-                <h3 style="font-size: 22px; font-weight: 900; margin: 0 0 8px 0; color: #fff;">صوتك مسموع وقضيتك تهمنا.. شاركنا الآن في بناء وتكافل الحي</h3>
-                <p style="font-size: 14px; color: #cbd5e1; margin: 0; line-height: 1.6; font-weight: 600;">عبر بوابة الديوان الإلكترونية الموحدة، يمكنك الآن تقديم طلبات المناشدات، الإبلاغ الفوري عن المفقودات والأمانات، إرسال تغطية إخبارية من منطقتك، أو ترشيح شخصيات مؤثرة للتكريم المجتمعي.</p>
+    <!-- ==================== أزرار الخدمات السريعة (5 أقسام) ==================== -->
+    <div class="services-5grid">
+        <div class="service-card help" onclick="openGovModal('help')">
+            <div class="service-icon"><i class="fas fa-hand-holding-heart"></i></div>
+            <div class="service-title">مناشدة</div>
+            <div class="service-desc">تقديم طلب مساعدة</div>
+        </div>
+        <div class="service-card lost" onclick="openGovModal('lost')">
+            <div class="service-icon"><i class="fas fa-search-location"></i></div>
+            <div class="service-title">مفقودات</div>
+            <div class="service-desc">الإبلاغ عن مفقود</div>
+        </div>
+        <div class="service-card news" onclick="openGovModal('news')">
+            <div class="service-icon"><i class="fas fa-camera"></i></div>
+            <div class="service-title">أرسل خبراً</div>
+            <div class="service-desc">تغطية محلية</div>
+        </div>
+        <div class="service-card person" onclick="openGovModal('person')">
+            <div class="service-icon"><i class="fas fa-award"></i></div>
+            <div class="service-title">شخصية الأسبوع</div>
+            <div class="service-desc">ترشيح قدوة</div>
+        </div>
+        <div class="service-card events" onclick="openGovModal('events')">
+            <div class="service-icon"><i class="fas fa-calendar-alt"></i></div>
+            <div class="service-title">فعالية</div>
+            <div class="service-desc">تسجيل مبادرة</div>
+        </div>
+    </div>
+    
+    <!-- ==================== القسم الرئيسي: عمودين (أخبار رئيسية + سايدبار) ==================== -->
+    <div class="home-main-grid">
+        
+        <!-- العمود الأيمن: أخبار مميزة مع سلايدر داخلي + قائمة أخبار -->
+        <div class="featured-news-area">
+            <div class="section-head">
+                <h3><i class="far fa-newspaper"></i> أخر المستجدات والأخبار</h3>
+                <button class="gov-action-btn-sm" onclick="openGovModal('news')" style="background:#d4af37; color:#115c38; padding:5px 12px; font-size:12px;"><i class="fas fa-plus"></i> أرسل خبراً</button>
             </div>
-            <div style="flex-shrink: 0;">
-                <button class="gov-action-btn-sm" onclick="openGovModal('help')" style="background:var(--gold); color:#111; padding: 14px 28px; font-size: 14.5px; border-radius:8px; box-shadow:none;"><i class="fas fa-paper-plane"></i> أرسل طلبك / مقالك الآن</button>
+            
+            <!-- سلايدر الأخبار المصغر داخل القسم -->
+            <div class="news-feature-slider" id="featureSlider">
+                <?php
+                $feature_news = new WP_Query(array('post_type' => 'news', 'posts_per_page' => 4, 'post_status' => 'publish'));
+                $f_index = 0;
+                if($feature_news->have_posts()) :
+                    while($feature_news->have_posts()) : $feature_news->the_post();
+                    $img_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'large') : 'https://picsum.photos/800/400?random=' . get_the_ID();
+                    $f_active = ($f_index == 0) ? 'active' : '';
+                ?>
+                <div class="feature-slide <?php echo $f_active; ?>" style="background-image: url('<?php echo $img_url; ?>');">
+                    <div class="feature-overlay"></div>
+                    <div class="feature-content">
+                        <h4><?php the_title(); ?></h4>
+                        <p><?php echo wp_trim_words(get_the_excerpt(), 12, '...'); ?></p>
+                    </div>
+                </div>
+                <?php $f_index++; endwhile; wp_reset_postdata(); endif; ?>
+            </div>
+            
+            <!-- قائمة الأخبار الإضافية -->
+            <div class="news-list-grid">
+                <?php
+                $more_news = new WP_Query(array('post_type' => 'news', 'posts_per_page' => 4, 'offset' => 4, 'post_status' => 'publish'));
+                if($more_news->have_posts()) :
+                    while($more_news->have_posts()) : $more_news->the_post();
+                ?>
+                <div class="news-list-item">
+                    <?php if(has_post_thumbnail()) : ?>
+                        <img class="news-list-img" src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'thumbnail'); ?>" alt="">
+                    <?php else : ?>
+                        <img class="news-list-img" src="https://picsum.photos/80/60?random=<?php echo get_the_ID(); ?>" alt="">
+                    <?php endif; ?>
+                    <div class="news-list-info">
+                        <div class="news-list-title"><a href="<?php the_permalink(); ?>"><?php echo wp_trim_words(get_the_title(), 10, '...'); ?></a></div>
+                        <div class="news-list-date"><i class="far fa-clock"></i> <?php echo get_the_date('d F Y'); ?> | <i class="far fa-eye"></i> <?php echo alzaytoon_get_post_views(get_the_ID()); ?></div>
+                    </div>
+                </div>
+                <?php endwhile; wp_reset_postdata(); endif; ?>
             </div>
         </div>
-
-        <div class="gov-eservices-row" style="margin-top: 0; margin-bottom: 20px;">
-            <a href="javascript:void(0)" onclick="openGovModal('help')" class="eservice-btn c-help">
-                <div class="eservice-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                <span class="eservice-title">تقديم مناشدة</span>
-                <span class="eservice-desc">إرسال طلبات المساعدة والدعم العاجل إلكترونياً</span>
-            </a>
-            <a href="javascript:void(0)" onclick="openGovModal('lost')" class="eservice-btn c-lost">
-                <div class="eservice-icon"><i class="fas fa-search-location"></i></div>
-                <span class="eservice-title">الإبلاغ عن مفقودات</span>
-                <span class="eservice-desc">النظام المركزي لمتابعة المفقودات والأمانات بالحي</span>
-            </a>
-            <a href="javascript:void(0)" onclick="openGovModal('news')" class="eservice-btn c-news">
-                <div class="eservice-icon"><i class="fas fa-camera"></i></div>
-                <span class="eservice-title">إرسال خبر / تغطية</span>
-                <span class="eservice-desc">شارك أحداث وأخبار منطقتك لنشرها بالمركز الإعلامي</span>
-            </a>
-            <a href="javascript:void(0)" onclick="openGovModal('person')" class="eservice-btn c-person">
-                <div class="eservice-icon"><i class="fas fa-award"></i></div>
-                <span class="eservice-title">ترشيح شخصية الأسبوع</span>
-                <span class="eservice-desc">رشح النماذج المشرفة والمؤثرة من أبناء المجتمع</span>
-            </a>
+        
+        <!-- العمود الأيسر: سايدبار شامل -->
+        <div>
+            
+            <!-- المناشدات -->
+            <div class="appeals-list-compact">
+                <div class="section-head" style="background:#115c38; border-radius:0;">
+                    <h3><i class="fas fa-hand-holding-heart"></i> المناشدات العاجلة</h3>
+                    <button class="gov-action-btn-sm" onclick="openGovModal('help')" style="background:#d4af37; color:#115c38; padding:5px 12px;"><i class="fas fa-plus"></i> مناشدة</button>
+                </div>
+                <div>
+                    <?php
+                    $appeals = new WP_Query(array('post_type' => 'help', 'posts_per_page' => 5, 'post_status' => 'publish'));
+                    if($appeals->have_posts()) :
+                        while($appeals->have_posts()) : $appeals->the_post();
+                        $badge = get_post_meta(get_the_ID(), '_appeal_badge_status', true);
+                        $badge_class = 'badge-new'; $badge_txt = 'جديد';
+                        if($badge == 'urgent') { $badge_class = 'badge-urgent'; $badge_txt = 'عاجلة'; }
+                        elseif($badge == 'necessary') { $badge_class = 'badge-necessary'; $badge_txt = 'ضرورية'; }
+                        elseif($badge == 'following') { $badge_class = 'badge-following'; $badge_txt = 'متابعة'; }
+                    ?>
+                    <div class="appeal-item">
+                        <span class="appeal-badge <?php echo $badge_class; ?>"><?php echo $badge_txt; ?></span>
+                        <a href="<?php the_permalink(); ?>" class="appeal-title"><?php echo wp_trim_words(get_the_title(), 8, '...'); ?></a>
+                        <span class="appeal-date"><?php echo get_the_date('d/m'); ?></span>
+                    </div>
+                    <?php endwhile; wp_reset_postdata(); endif; ?>
+                </div>
+            </div>
+            
+            <!-- المفقودات -->
+            <div class="appeals-list-compact">
+                <div class="section-head" style="background:#115c38;">
+                    <h3><i class="fas fa-search-location"></i> المفقودات</h3>
+                    <button class="gov-action-btn-sm" onclick="openGovModal('lost')" style="background:#d4af37; color:#115c38; padding:5px 12px;"><i class="fas fa-plus"></i> إبلاغ</button>
+                </div>
+                <div>
+                    <?php
+                    $losts = new WP_Query(array('post_type' => 'lost', 'posts_per_page' => 4, 'post_status' => 'publish'));
+                    if($losts->have_posts()) :
+                        while($losts->have_posts()) : $losts->the_post();
+                    ?>
+                    <div class="appeal-item">
+                        <span class="appeal-badge" style="background:#e74c3c; color:#fff;">مفقود</span>
+                        <a href="<?php the_permalink(); ?>" class="appeal-title"><?php echo wp_trim_words(get_the_title(), 8, '...'); ?></a>
+                        <span class="appeal-date"><?php echo get_the_date('d/m'); ?></span>
+                    </div>
+                    <?php endwhile; wp_reset_postdata(); endif; ?>
+                </div>
+            </div>
+            
+            <!-- شخصية الأسبوع -->
+            <div class="person-widget">
+                <?php
+                $person = new WP_Query(array('post_type' => 'person', 'posts_per_page' => 1, 'post_status' => 'publish'));
+                if($person->have_posts()) :
+                    while($person->have_posts()) : $person->the_post();
+                    if(has_post_thumbnail()) {
+                        echo '<img class="person-img" src="' . get_the_post_thumbnail_url(get_the_ID(), 'medium') . '" alt="">';
+                    } else {
+                        echo '<img class="person-img" src="https://picsum.photos/100/100?random=' . get_the_ID() . '" alt="">';
+                    }
+                ?>
+                <div class="person-name"><?php the_title(); ?></div>
+                <div class="person-bio"><?php echo wp_trim_words(get_the_content(), 15, '...'); ?></div>
+                <a href="<?php the_permalink(); ?>" style="color:#d4af37; font-weight:800; font-size:13px;">السيرة الكاملة <i class="fas fa-arrow-left"></i></a>
+                <?php endwhile; wp_reset_postdata(); endif; ?>
+                <hr style="margin: 15px 0; border-color: rgba(255,255,255,0.2);">
+                <button onclick="openGovModal('person')" style="background:#d4af37; color:#115c38; border:none; padding:8px 15px; border-radius:25px; font-weight:800; width:100%; cursor:pointer;"><i class="fas fa-user-plus"></i> رشح شخصية الأسبوع</button>
+            </div>
+            
+            <!-- الفعاليات القادمة -->
+            <div class="appeals-list-compact">
+                <div class="section-head" style="background:#115c38;">
+                    <h3><i class="far fa-calendar-alt"></i> الفعاليات القادمة</h3>
+                    <button class="gov-action-btn-sm" onclick="openGovModal('events')" style="background:#d4af37; color:#115c38; padding:5px 12px;"><i class="fas fa-plus"></i> تسجيل</button>
+                </div>
+                <div>
+                    <?php
+                    $events = new WP_Query(array('post_type' => 'events', 'posts_per_page' => 4, 'post_status' => 'publish'));
+                    if($events->have_posts()) :
+                        while($events->have_posts()) : $events->the_post();
+                    ?>
+                    <div class="appeal-item">
+                        <span class="appeal-badge" style="background:#f39c12; color:#fff;">فعالية</span>
+                        <a href="<?php the_permalink(); ?>" class="appeal-title"><?php echo wp_trim_words(get_the_title(), 8, '...'); ?></a>
+                        <span class="appeal-date"><?php echo get_the_date('d/m'); ?></span>
+                    </div>
+                    <?php endwhile; wp_reset_postdata(); endif; ?>
+                </div>
+            </div>
+            
+            <!-- استطلاع الرأي -->
+            <div class="poll-widget">
+                <div class="poll-question"><?php echo get_theme_mod('alzaytoon_poll_question', 'ما رأيك في مستوى الخدمات المقدمة في حي الزيتون مؤخراً؟'); ?></div>
+                <form id="royalPollFormSidebar">
+                    <?php for($i=1; $i<=3; $i++) {
+                        $opt_text = get_theme_mod('alzaytoon_poll_opt'.$i, 'خيار ' . $i);
+                        if(!empty($opt_text)) :
+                    ?>
+                    <div class="poll-option">
+                        <label>
+                            <input type="radio" name="poll_vote_radio" value="<?php echo $i; ?>"> <?php echo esc_html($opt_text); ?>
+                        </label>
+                        <div class="poll-bar"><div class="poll-fill" id="barFillSide<?php echo $i; ?>"></div></div>
+                        <span class="poll-percent" id="percentSide<?php echo $i; ?>" style="font-size:11px; color:#115c38;"></span>
+                    </div>
+                    <?php endif; } ?>
+                    <button type="button" class="gov-action-btn-sm" style="width:100%; justify-content:center; margin-top:10px;" onclick="submitSidebarPoll()"><i class="fas fa-check-circle"></i> اعتماد التصويت</button>
+                </form>
+                <p id="pollAckMsgSidebar" style="display:none; text-align:center; color:#115c38; font-size:12px; margin-top:10px;">تم تسجيل تصويتك، شكراً لك.</p>
+            </div>
+            
+            <!-- دليل الطوارئ -->
+            <div class="emergency-widget">
+                <h4 style="margin-bottom:15px; color:#e74c3c;"><i class="fas fa-phone-volume"></i> دليل الطوارئ للحي</h4>
+                <div class="emergency-item"><span><i class="fas fa-ambulance"></i> الإسعاف</span><a href="tel:101" class="emergency-number" style="color:#e74c3c;">101</a></div>
+                <div class="emergency-item"><span><i class="fas fa-fire-extinguisher"></i> الدفاع المدني</span><a href="tel:102" class="emergency-number" style="color:#e67e22;">102</a></div>
+                <div class="emergency-item"><span><i class="fas fa-shield-alt"></i> الشرطة</span><a href="tel:100" class="emergency-number" style="color:#3498db;">100</a></div>
+                <div class="emergency-item"><span><i class="fas fa-faucet"></i> طوارئ المياه</span><a href="tel:115" class="emergency-number" style="color:#27ae60;">115</a></div>
+            </div>
         </div>
-    </section>
-
+    </div>
+    
+    <!-- ==================== الأقسام السفلية: أخبار مقسمة (3 أعمدة) ==================== -->
+    <div class="bottom-sections">
+        
+        <div class="bottom-section-card">
+            <div class="bottom-section-header"><i class="fas fa-laptop-code"></i> نبض التكنولوجيا</div>
+            <div class="bottom-section-list">
+                <?php
+                $tech_news = new WP_Query(array('post_type' => 'news', 'posts_per_page' => 4, 'post_status' => 'publish'));
+                if($tech_news->have_posts()) :
+                    while($tech_news->have_posts()) : $tech_news->the_post();
+                ?>
+                <div class="bottom-item">
+                    <div class="bottom-item-icon"></div>
+                    <a href="<?php the_permalink(); ?>" class="bottom-item-title"><?php echo wp_trim_words(get_the_title(), 10, '...'); ?></a>
+                    <small><?php echo get_the_date('d/m'); ?></small>
+                </div>
+                <?php endwhile; wp_reset_postdata(); endif; ?>
+            </div>
+        </div>
+        
+        <div class="bottom-section-card">
+            <div class="bottom-section-header"><i class="fas fa-feather-alt"></i> شؤون محلية</div>
+            <div class="bottom-section-list">
+                <?php
+                $local_news = new WP_Query(array('post_type' => 'events', 'posts_per_page' => 4, 'post_status' => 'publish'));
+                if($local_news->have_posts()) :
+                    while($local_news->have_posts()) : $local_news->the_post();
+                ?>
+                <div class="bottom-item">
+                    <div class="bottom-item-icon"></div>
+                    <a href="<?php the_permalink(); ?>" class="bottom-item-title"><?php echo wp_trim_words(get_the_title(), 10, '...'); ?></a>
+                    <small><?php echo get_the_date('d/m'); ?></small>
+                </div>
+                <?php endwhile; wp_reset_postdata(); endif; ?>
+            </div>
+        </div>
+        
+        <div class="bottom-section-card">
+            <div class="bottom-section-header"><i class="fas fa-medal"></i> شخصيات وأثر</div>
+            <div class="bottom-section-list">
+                <?php
+                $persons = new WP_Query(array('post_type' => 'person', 'posts_per_page' => 4, 'post_status' => 'publish'));
+                if($persons->have_posts()) :
+                    while($persons->have_posts()) : $persons->the_post();
+                ?>
+                <div class="bottom-item">
+                    <div class="bottom-item-icon"></div>
+                    <a href="<?php the_permalink(); ?>" class="bottom-item-title"><?php echo wp_trim_words(get_the_title(), 10, '...'); ?></a>
+                    <small><?php echo get_the_date('d/m'); ?></small>
+                </div>
+                <?php endwhile; wp_reset_postdata(); endif; ?>
+            </div>
+        </div>
+    </div>
+    
+    <!-- بنر إعلاني فاخر -->
+    <div class="home-bottom-adv-banner">
+        <h3 class="adv-banner-title"><i class="fas fa-star"></i> مساحة إعلانية مخصصة لشركات ومحلات حي الزيتون</h3>
+        <p class="adv-banner-desc">لرعاية وتطوير الأنشطة الخيرية والخدمية داخل الحي، يرجى التواصل مع إدارة الشبكة عبر بوابة اتصل بنا الرسمية أو عبر رقم الواتساب المعتمد.</p>
+    </div>
 </div>
 
+<!-- جافاسكربت السلايدرز والاستطلاع -->
 <script>
-/* جافاسكربت تشغيل السلايدر v2 الحصري */
-document.addEventListener('DOMContentLoaded', () => {
-    const slides = document.querySelectorAll('.hero-slide');
-    if(slides.length === 0) return;
-    
-    let currentSlide = 0;
-    function showSlide(index){
-        slides.forEach(slide => slide.classList.remove('active'));
-        if(slides[index]) slides[index].classList.add('active');
-    }
-    
-    const nextBtn = document.getElementById('nextSlide');
-    const prevBtn = document.getElementById('prevSlide');
-    
-    if(nextBtn) {
-        nextBtn.onclick = () => {
-            currentSlide++;
-            if(currentSlide >= slides.length) currentSlide = 0;
-            showSlide(currentSlide);
-        };
-    }
-    if(prevBtn) {
-        prevBtn.onclick = () => {
-            currentSlide--;
-            if(currentSlide < 0) currentSlide = slides.length - 1;
-            showSlide(currentSlide);
-        };
-    }
+// السلايدر الرئيسي
+(function() {
+    const slides = document.querySelectorAll('#heroSlider .slider-slide');
     if(slides.length > 1) {
+        let current = 0;
+        const dotsContainer = document.getElementById('sliderDots');
+        if(dotsContainer) {
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('slider-dot');
+                if(i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    slides.forEach(s => s.classList.remove('active'));
+                    slides[i].classList.add('active');
+                    document.querySelectorAll('.slider-dot').forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    current = i;
+                });
+                dotsContainer.appendChild(dot);
+            });
+        }
         setInterval(() => {
-            currentSlide++;
-            if(currentSlide >= slides.length) currentSlide = 0;
-            showSlide(currentSlide);
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
+            const dots = document.querySelectorAll('.slider-dot');
+            dots.forEach((d, i) => d.classList.toggle('active', i === current));
         }, 6000);
     }
-});
+})();
+
+// السلايدر الداخلي للأخبار المميزة
+(function() {
+    const featureSlides = document.querySelectorAll('#featureSlider .feature-slide');
+    if(featureSlides.length > 1) {
+        let fCurrent = 0;
+        setInterval(() => {
+            featureSlides[fCurrent].classList.remove('active');
+            fCurrent = (fCurrent + 1) % featureSlides.length;
+            featureSlides[fCurrent].classList.add('active');
+        }, 5000);
+    }
+})();
+
+// استطلاع الرأي في السايدبار
+function submitSidebarPoll() {
+    const radios = document.querySelectorAll('#royalPollFormSidebar input[name="poll_vote_radio"]');
+    let checked = false;
+    radios.forEach(r => { if(r.checked) checked = true; });
+    if(!checked) { alert('الرجاء اختيار إجابة قبل التصويت'); return; }
+    // عرض أشرطة تقدم وهمية
+    document.getElementById('barFillSide1').style.width = '60%';
+    document.getElementById('percentSide1').innerText = '60%';
+    document.getElementById('barFillSide2').style.width = '25%';
+    document.getElementById('percentSide2').innerText = '25%';
+    document.getElementById('barFillSide3').style.width = '15%';
+    document.getElementById('percentSide3').innerText = '15%';
+    document.getElementById('pollAckMsgSidebar').style.display = 'block';
+    setTimeout(() => { document.getElementById('pollAckMsgSidebar').style.display = 'none'; }, 3000);
+}
 </script>
 
 <?php get_footer(); ?>
