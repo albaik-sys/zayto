@@ -1,11 +1,138 @@
 <?php get_header(); ?>
 
+<style>
+    /* =========================================================================
+       تنسيقات السلايدر المطور المصلحة لضبط الـ Layout ومنع التداخل البصري
+    ========================================================================= */
+    .royal-hero-slider {
+        position: relative;
+        height: 480px;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 45px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        background: #000;
+        direction: ltr; /* لضمان انزلاق عناصر التحكم بشكل صحيح */
+    }
+    .royal-hero-slider * {
+        direction: rtl; /* إعادة النص للوضع الطبيعي بالداخل */
+    }
+    .hero-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        z-index: 1;
+        transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        transform: scale(1.02);
+    }
+    .hero-slide.active {
+        opacity: 1;
+        z-index: 2;
+        transform: scale(1);
+    }
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 100%);
+        z-index: 3;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 5;
+        max-width: 720px;
+        padding: 80px 50px;
+        color: #fff;
+    }
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.2);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 6px 16px;
+        border-radius: 100px;
+        font-size: 12.5px;
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+    .hero-content h1 {
+        font-size: 32px;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        font-weight: 900;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .hero-content p {
+        font-size: 15.5px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.85);
+        margin-bottom: 25px;
+    }
+    .slider-controls {
+        position: absolute;
+        bottom: 25px;
+        left: 25px;
+        z-index: 10;
+        display: flex;
+        gap: 10px;
+        direction: ltr;
+    }
+    .slider-controls button {
+        width: 44px;
+        height: 44px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        color: #fff;
+        font-size: 15px;
+        cursor: pointer;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .slider-controls button:hover {
+        background: var(--gold, #d4af37);
+        color: #111;
+        transform: scale(1.05);
+    }
+
+    /* =========================================================================
+       تنسيقات لافتة إرسال المقالات وبلوك التفاعل السفلي المطور
+    ========================================================================= */
+    .interaction-banner-royal {
+        background: linear-gradient(135deg, #0f5132 0%, #062416 100%);
+        border-right: 5px solid var(--gold, #d4af37);
+        border-radius: 14px;
+        padding: 30px 35px;
+        color: #fff;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        box-shadow: 0 10px 30px rgba(15,81,50,0.12);
+    }
+    
+    @media (max-width: 768px) {
+        .royal-hero-slider { height: 400px; }
+        .hero-content { padding: 40px 25px; }
+        .hero-content h1 { font-size: 24px; }
+        .hero-content p { font-size: 14px; }
+        .interaction-banner-royal { padding: 25px; text-align: center; justify-content: center; }
+    }
+</style>
+
 <div class="container home-layout official-container royal-layout gov-portal-wrapper">
     
-    <!-- =========================================================================
-		 القسم الأول: السلايدر الرئيسي الفاخر (Hero Slider v2) كما هو مصمم
-	========================================================================== -->
-    <section class="royal-hero-slider" style="margin-bottom: 45px;">
+    <section class="royal-hero-slider">
         <?php
         $slider_query = new WP_Query(array('post_type' => array('events', 'news'), 'posts_per_page' => 4, 'post_status' => 'publish'));
         $slide_index = 0;
@@ -13,16 +140,16 @@
             $slider_bg_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'full') : 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1600';
             $active_class = ($slide_index == 0) ? 'active' : '';
         ?>
-        <div class="hero-slide <?php echo $active_class; ?>" style="background-image:url('<?php echo $slider_bg_url; ?>');">
+        <div class="hero-slide <?php echo $active_class; ?>" style="background-image:url('<?php echo esc_url($slider_bg_url); ?>');">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <span class="hero-badge">
-                    <i class="fas fa-bolt"></i> <?php echo (get_post_type() == 'events') ? 'تغطية مناسبات' : 'أخبار عاجلة'; ?>
+                    <i class="fas fa-bolt" style="color:var(--gold);"></i> <?php echo (get_post_type() == 'events') ? 'تغطية مناسبات' : 'أخبار عاجلة'; ?>
                 </span>
                 <h1><?php the_title(); ?></h1>
                 <p><?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?></p>
                 <div class="hero-buttons">
-                    <a href="<?php the_permalink(); ?>" class="hero-btn primary"><i class="fas fa-newspaper"></i> اقرأ التفاصيل</a>
+                    <a href="<?php the_permalink(); ?>" class="hero-btn primary" style="background:linear-gradient(135deg, var(--gold), #f8dc7c); color:#111; padding:10px 24px; border-radius:8px; font-weight:bold; text-decoration:none; display:inline-flex; align-items:center; gap:8px;"><i class="fas fa-newspaper"></i> اقرأ التفاصيل</a>
                 </div>
             </div>
         </div>
@@ -43,15 +170,10 @@
         </div>
     </section>
 
-    <!-- =========================================================================
-		 القسم الثاني: الهيكل الرئيسي للموقع (أحدث الأخبار + ديوان المناشدات + الدليل)
-	========================================================================== -->
     <div class="gov-main-grid-layout">
         
-        <!-- العمود الأيمن الرئيسي -->
         <div class="gov-main-content-column">
             
-            <!-- بلوك أحدث الأخبار والتغطيات -->
             <section class="gov-home-section" style="margin-bottom: 50px;">
                 <div class="gov-section-header-v2">
                     <h2 class="gov-section-title-v2"><i class="far fa-newspaper"></i> أحدث الأخبار والتغطيات المحلية</h2>
@@ -85,7 +207,6 @@
                 </div>
             </section>
 
-            <!-- بلوك ديوان المناشدات والمساعدات الرسمية للحي -->
             <section class="gov-home-section" style="margin-bottom: 50px;">
                 <div class="gov-section-header-v2">
                     <h2 class="gov-section-title-v2"><i class="fas fa-hand-holding-heart"></i> ديوان المناشدات والمساعدات العامة</h2>
@@ -118,7 +239,6 @@
                 </div>
             </section>
 
-            <!-- ضبط الأقسام التي ليست بالرئيسية: بلوك عرض شبكي مخصص للمناسبات والفعاليات (Events) -->
             <section class="gov-home-section" style="margin-bottom: 50px;">
                 <div class="gov-section-header-v2">
                     <h2 class="gov-section-title-v2"><i class="far fa-calendar-alt"></i> الفعاليات والمناسبات المجتمعية الحالية</h2>
@@ -147,7 +267,6 @@
                 </div>
             </section>
 
-            <!-- استعلام بوابة الاستعلام عن المفقودات والأمانات الحالية -->
             <section class="gov-home-section" style="margin-bottom: 50px;">
                 <div class="gov-section-header-v2">
                     <h2 class="gov-section-title-v2"><i class="fas fa-search-location"></i> آخر بلاغات المفقودات والأمانات المركزية</h2>
@@ -177,7 +296,6 @@
 
         </div>
 
-        <!-- عمود السايدبار الأيسر -->
         <div class="gov-sidebar-column">
             
             <div class="sidebar-widget-gov" style="border-top:4px solid var(--gold); text-align:center;">
@@ -234,25 +352,20 @@
         </div>
     </div>
 
-    <!-- =========================================================================
-		 القسم الثالث والأخير المطور: نقل كروت الخدمات إلى نهاية الموقع مع لافتة جذابة
-	========================================================================== -->
     <hr style="border: none; border-top: 1px dashed #cbd5e1; margin: 50px 0 35px 0;">
     
     <section class="royal-interaction-footer-zone" style="margin-bottom: 30px;">
-        <!-- اللافتة المميزة التفاعلية الفاخرة فوق الكروت -->
-        <div class="interaction-banner-royal" style="background: linear-gradient(135deg, #0f5132 0%, #062416 100%); border-right: 5px solid var(--gold); border-radius: 16px; padding: 35px 40px; color: #fff; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; box-shadow: 0 15px 35px rgba(15,81,50,0.15);">
-            <div style="max-width: 650px;">
-                <span style="background: rgba(212,175,55,0.2); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 12px; font-weight: 900; display: inline-block; margin-bottom: 10px; letter-spacing: 0.5px;"><i class="fas fa-bullhorn"></i> لجان التكافل والمشاركة الأهلية المفتوحة</span>
-                <h3 style="font-size: 24px; font-weight: 900; margin: 0 0 8px 0; color: #fff;">صوتك مسموع وقضيتك تهمنا.. شاركنا الآن في بناء وتكافل الحي</h3>
-                <p style="font-size: 14.5px; color: #cbd5e1; margin: 0; line-height: 1.6; font-weight: 600;">عبر بوابة الديوان الإلكترونية الموحدة، يمكنك الآن تقديم طلبات المناشدات، الإبلاغ الفوري عن المفقودات والأمانات، إرسال تغطية إخبارية من منطقتك، أو ترشيح شخصيات مؤثرة للتكريم المجتمعي.</p>
+        <div class="interaction-banner-royal">
+            <div style="max-width: 650px; text-align: right;">
+                <span style="background: rgba(212,175,55,0.2); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 12px; font-weight: 900; display: inline-block; margin-bottom: 10px;"><i class="fas fa-bullhorn"></i> لجان التكافل والمشاركة الأهلية المفتوحة</span>
+                <h3 style="font-size: 22px; font-weight: 900; margin: 0 0 8px 0; color: #fff;">صوتك مسموع وقضيتك تهمنا.. شاركنا الآن في بناء وتكافل الحي</h3>
+                <p style="font-size: 14px; color: #cbd5e1; margin: 0; line-height: 1.6; font-weight: 600;">عبر بوابة الديوان الإلكترونية الموحدة، يمكنك الآن تقديم طلبات المناشدات، الإبلاغ الفوري عن المفقودات والأمانات، إرسال تغطية إخبارية من منطقتك، أو ترشيح شخصيات مؤثرة للتكريم المجتمعي.</p>
             </div>
             <div style="flex-shrink: 0;">
-                <button class="hero-btn primary" onclick="openGovModal('help')" style="padding: 14px 30px; border-radius: 10px; font-size: 15px; border:none; cursor:pointer;"><i class="fas fa-paper-plane"></i> أرسل طلبك / مقالك الآن</button>
+                <button class="gov-action-btn-sm" onclick="openGovModal('help')" style="background:var(--gold); color:#111; padding: 14px 28px; font-size: 14.5px; border-radius:8px; box-shadow:none;"><i class="fas fa-paper-plane"></i> أرسل طلبك / مقالك الآن</button>
             </div>
         </div>
 
-        <!-- كروت الخدمات الأربعة التفاعلية بأسلوب الـ Glassmorphism المنقولة من الأعلى بانتظام هندسي متقدم -->
         <div class="gov-eservices-row" style="margin-top: 0; margin-bottom: 20px;">
             <a href="javascript:void(0)" onclick="openGovModal('help')" class="eservice-btn c-help">
                 <div class="eservice-icon"><i class="fas fa-hand-holding-heart"></i></div>
