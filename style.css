@@ -1485,3 +1485,248 @@ img { max-width: 100%; height: auto; display: block; }
     .logo-icon-wrapper i { font-size: 28px; }
     .pulse-ring { width: 40px; height: 40px; top: -4px; left: -4px; }
 }
+/* ==============================================
+   الفوتر الملكي الفاخر (4 أعمدة)
+   ============================================== */
+
+.luxury-footer {
+    background: linear-gradient(135deg, #0a3823 0%, #115c38 100%);
+    color: #e2e8f0;
+    padding: 60px 0 25px;
+    margin-top: 60px;
+    border-top: 4px solid #d4af37;
+    position: relative;
+}
+
+.luxury-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4af37, #d4af37, transparent);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
+    margin-bottom: 45px;
+}
+
+/* العمود الأول: معلومات الموقع */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.footer-logo i {
+    font-size: 38px;
+    color: #d4af37;
+}
+.footer-logo h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    margin: 0;
+}
+.footer-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #cbd5e0;
+}
+.footer-social {
+    display: flex;
+    gap: 12px;
+}
+.footer-social a {
+    width: 38px;
+    height: 38px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d4af37;
+    transition: 0.3s;
+}
+.footer-social a:hover {
+    background: #d4af37;
+    color: #115c38;
+    transform: translateY(-3px);
+}
+
+/* العناوين العامة للأعمدة */
+.footer-col h4 {
+    font-size: 17px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(212,175,55,0.3);
+    display: inline-block;
+}
+.footer-col h4 i {
+    color: #d4af37;
+    margin-left: 8px;
+}
+
+/* قوائم الروابط */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-links li {
+    margin-bottom: 12px;
+}
+.footer-links li a {
+    color: #cbd5e0;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.footer-links li a i {
+    width: 22px;
+    color: #d4af37;
+    font-size: 13px;
+}
+.footer-links li a:hover {
+    color: #d4af37;
+    transform: translateX(-5px);
+}
+
+/* معلومات الاتصال */
+.contact-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+.contact-info-list li {
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13.5px;
+}
+.contact-info-list li i {
+    width: 30px;
+    color: #d4af37;
+    font-size: 16px;
+}
+.contact-info-list li a {
+    color: #cbd5e0;
+    text-decoration: none;
+}
+.contact-info-list li a:hover {
+    color: #d4af37;
+}
+
+/* الروابط القانونية */
+.legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.legal-links a {
+    font-size: 12px;
+    color: #cbd5e0;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.legal-links a i {
+    color: #d4af37;
+    font-size: 12px;
+}
+.legal-links a:hover {
+    color: #d4af37;
+}
+
+/* الصف السفلي (حقوق الملكية) */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.copyright p {
+    font-size: 12.5px;
+    color: #94a3b8;
+    margin: 0;
+}
+.copyright strong {
+    color: #d4af37;
+}
+.footer-badge {
+    display: flex;
+    gap: 15px;
+}
+.cert-badge, .version-badge {
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.08);
+}
+.cert-badge i {
+    color: #2ecc71;
+    margin-left: 5px;
+}
+.version-badge {
+    background: rgba(212,175,55,0.15);
+    color: #d4af37;
+}
+
+/* استجابة الجوال */
+@media(max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+@media(max-width: 600px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-badge {
+        justify-content: center;
+    }
+    .legal-links {
+        justify-content: center;
+    }
+    .contact-info-list li {
+        justify-content: center;
+    }
+    .footer-col h4 {
+        display: block;
+        text-align: center;
+    }
+    .footer-logo {
+        justify-content: center;
+    }
+    .footer-social {
+        justify-content: center;
+    }
+    .footer-desc {
+        text-align: center;
+    }
+}
